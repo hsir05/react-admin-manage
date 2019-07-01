@@ -1,0 +1,13 @@
+@import '../style/theme.scss';
+
+.top-title {
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  color:$fontColor;
+  text-align: center;
+  background:$boxBg;
+  border-bottom: 1px solid $borderColor;
+  font-family:  "Monospaced Number", "Chinese Quote", -apple-system, BlinkMacSystemFont,"Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

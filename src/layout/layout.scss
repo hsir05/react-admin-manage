@@ -1,0 +1,50 @@
+
+@import '../style/theme';
+
+.headerTop {
+  height: 50px;
+  line-height: 50px;
+  background:$boxBg;
+  color:$fontColor;
+  text-align: right;
+  .avator-wrop{
+    height: 100%;
+    width: 120px;
+    display: inline-block;
+    // position: relative;
+    text-align: center;
+    overflow: hidden;
+    right: -30px;
+    &:hover{
+      .user-fun{
+        display: block;
+      }
+    }
+  }
+  .user-fun{
+    display: none;
+    width: 180px;
+    background: $borderColor;
+    position: absolute;
+    right: 30px;
+    top: 50px;
+    z-index: 3;
+    border-radius: 4px;
+    text-align: left;
+    border: 1px solid $borderColor;
+    li{
+      border-bottom: 1px solid $borderColor;
+      cursor: pointer;
+      padding-left: 30px;
+      background: $fontColor;     
+       color:$fontColor4; 
+      &:hover{
+        color:$fontColor5;
+      }
+    }
+  }
+  .avator {
+    cursor: pointer;
+  }
+  
+}

@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+@import './normalize.scss';
+@import '~antd/dist/antd.css';
+@import './theme.scss';
+
+#root{
+  width: 100%;
+  height: 100%;
+}
