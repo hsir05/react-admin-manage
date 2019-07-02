@@ -16,9 +16,14 @@ class Unit extends React.Component {
             page: 1,
             pageSize: 10,
             columns: [
-                { title: '标题222', dataIndex: 'title' },
-                { title: '作者', dataIndex: 'auth'},
-                { title: '添加时间', dataIndex: 'create_at' },
+                { title: 'logo', dataIndex: 'logo', render: logo => <img src={logo} alt="logo"/>, },
+                { title: '单位名称', dataIndex: 'name' },
+                { title: '单位英文名', dataIndex: 'en_name' },
+                { title: '类型', dataIndex: 'type'},
+                { title: '单位代码', dataIndex: 'code' },
+                { title: '单位地址', dataIndex: 'address' },
+                { title: '介绍', dataIndex: 'introduction' },
+                { title: '状态', dataIndex: 'status' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
                         <p>
@@ -50,13 +55,12 @@ class Unit extends React.Component {
     }
 
     getDate = async (values) => {
-        this.setState({ loading: true })
-        let par = { ...values, page: this.state.page, pageSize: this.state.pageSize, sort: 'create_at' }
+        // this.setState({ loading: true })
         try {
-            let result = await API.getArticleList(par)
+            let result = await API.getUnitList()
             this.setState({ articleList: result.data, loading: false, total: result.total })
         } catch (err) {
-            console.log(err)
+            console.warn(err)
         }
     }
 

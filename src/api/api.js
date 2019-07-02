@@ -27,9 +27,9 @@ class API extends Server{
     }
   }
 
-  async getArticleList(params = {}){
+  async getUnitList(params = {}){
     try{
-      let result = await this.axios('get', '/article', params)
+        let result = await this.axios('post', '/admin/unit/listPageUnit', params)
       if(result && result.status === '0'){
         return result
       }else{

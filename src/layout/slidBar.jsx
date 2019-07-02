@@ -34,7 +34,7 @@ class SlideBar extends React.Component {
           )
         } else if(!item.hidden){
           return (
-            <Menu.Item key={item.key}><Link to={item.url}><Icon type="inbox" /><span>{item.menu}</span></Link>   </Menu.Item>
+            <Menu.Item key={item.key}><Link to={item.url}><Icon type={item.icon} /><span>{item.menu}</span></Link>   </Menu.Item>
           )
         }
         

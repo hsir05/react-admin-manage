@@ -1,21 +1,8 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-import API from '../../api/api'
-import {
-    Form,
-    Input,
-    Tooltip,
-    Icon,
-    Cascader,
-    Select,
-    Row,
-    Col,
-    Checkbox,
-    Button,
-    AutoComplete,
-} from 'antd';
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
+// import API from '../../api/api'
+import { Form, Input, Cascader, Button, Upload, Icon, message } from 'antd';
+const { TextArea } = Input;
 
 const residences = [
     {
@@ -52,9 +39,28 @@ const residences = [
     },
 ];
 
+function getBase64 (img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+}
+
+function beforeUpload (file) {
+    const isJPG = file.type === 'image/jpeg';
+    if (!isJPG) {
+        message.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        message.error('Image must smaller than 2MB!');
+    }
+    return isJPG && isLt2M;
+}
+
 class AddEdit extends React.Component {
     state = {
         confirmDirty: false,
+        loading: false,
         autoCompleteResult: [],
         data: {
             list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/unitManager', menuName: '单位管理', icon: 'appstore' }, { url: null, menuName: '添加单位', icon: '' }],
@@ -69,6 +75,21 @@ class AddEdit extends React.Component {
                 console.log('Received values of form: ', values);
             }
         });
+    };
+    handleChange = info => {
+        if (info.file.status === 'uploading') {
+            this.setState({ loading: true });
+            return;
+        }
+        if (info.file.status === 'done') {
+            // Get this url from response in real world.
+            getBase64(info.file.originFileObj, imageUrl =>
+                this.setState({
+                    imageUrl,
+                    loading: false,
+                }),
+            );
+        }
     };
 
     handleConfirmBlur = e => {
@@ -105,8 +126,6 @@ class AddEdit extends React.Component {
 
     render () {
         const { getFieldDecorator } = this.props.form;
-        const { autoCompleteResult } = this.state;
-
         const formItemLayout = {
             labelCol: {
                 xs: { span: 14 },
@@ -129,28 +148,24 @@ class AddEdit extends React.Component {
                 },
             },
         };
-        const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '86',
-        })(
-            <Select style={{ width: 70 }}>
-                <Option value="86">+86</Option>
-                <Option value="87">+87</Option>
-            </Select>,
-        );
 
-        const websiteOptions = autoCompleteResult.map(website => (
-            <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-        ));
+        const uploadButton = (
+            <div>
+                <Icon type={this.state.loading ? 'loading' : 'plus'} />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        );
+        const { imageUrl } = this.state;
 
         return (
             <section>
                 <BreadCrumb   {...this.state.data} />
                 <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-                    <Form.Item label="E-mail">
-                        {getFieldDecorator('email', {
+                    <Form.Item label="单位名称">
+                        {getFieldDecorator('name', {
                             rules: [
                                 {
-                                    type: 'email',
+                                    type: 'name',
                                     message: 'The input is not valid E-mail!',
                                 },
                                 {
@@ -160,8 +175,8 @@ class AddEdit extends React.Component {
                             ],
                         })(<Input />)}
                     </Form.Item>
-                    <Form.Item label="Password" hasFeedback>
-                        {getFieldDecorator('password', {
+                    <Form.Item label="单位英文名" hasFeedback>
+                        {getFieldDecorator('en_name', {
                             rules: [
                                 {
                                     required: true,
@@ -171,10 +186,11 @@ class AddEdit extends React.Component {
                                     validator: this.validateToNextPassword,
                                 },
                             ],
-                        })(<Input.Password />)}
+                        })(<Input />)}
                     </Form.Item>
-                    <Form.Item label="Confirm Password" hasFeedback>
-                        {getFieldDecorator('confirm', {
+
+                    <Form.Item label="单位代码" hasFeedback>
+                        {getFieldDecorator('code', {
                             rules: [
                                 {
                                     required: true,
@@ -184,69 +200,55 @@ class AddEdit extends React.Component {
                                     validator: this.compareToFirstPassword,
                                 },
                             ],
-                        })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+                        })(<Input onBlur={this.handleConfirmBlur} />)}
                     </Form.Item>
-                    <Form.Item
-                        label={
-                            <span>
-                                Nickname&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                                    <Icon type="question-circle-o" />
-                                </Tooltip>
-                            </span>
-                        }
-                    >
-                        {getFieldDecorator('nickname', {
-                            rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
-                        })(<Input />)}
-                    </Form.Item>
-                    <Form.Item label="Habitual Residence">
-                        {getFieldDecorator('residence', {
+
+                    <Form.Item label="单位地址">
+                        {getFieldDecorator('address', {
                             initialValue: ['zhejiang', 'hangzhou', 'xihu'],
                             rules: [
                                 { type: 'array', required: true, message: 'Please select your habitual residence!' },
                             ],
                         })(<Cascader options={residences} />)}
                     </Form.Item>
-                    <Form.Item label="Phone Number">
-                        {getFieldDecorator('phone', {
-                            rules: [{ required: true, message: 'Please input your phone number!' }],
-                        })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
+
+                    <Form.Item label="介绍">
+                        {getFieldDecorator('introduction', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: 'Please input your password!',
+                                },
+                                {
+                                    validator: this.validateToNextPassword,
+                                },
+                            ],
+                        })(<TextArea rows={4} />)}
                     </Form.Item>
-                    <Form.Item label="Website">
-                        {getFieldDecorator('website', {
-                            rules: [{ required: true, message: 'Please input website!' }],
-                        })(
-                            <AutoComplete
-                                dataSource={websiteOptions}
-                                onChange={this.handleWebsiteChange}
-                                placeholder="website"
-                            >
-                                <Input />
-                            </AutoComplete>,
-                        )}
+                    <Form.Item label="介绍">
+                        {getFieldDecorator('introduction', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: 'Please input your password!',
+                                },
+                                {
+                                    validator: this.validateToNextPassword,
+                                },
+                            ],
+                        })(<Upload
+                            name="avatar"
+                            listType="picture-card"
+                            className="avatar-uploader"
+                            showUploadList={false}
+                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            beforeUpload={beforeUpload}
+                            onChange={this.handleChange}
+                        >
+                            {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
+                        </Upload>)}
                     </Form.Item>
-                    <Form.Item label="Captcha" extra="We must make sure that your are a human.">
-                        <Row gutter={8}>
-                            <Col span={12}>
-                                {getFieldDecorator('captcha', {
-                                    rules: [{ required: true, message: 'Please input the captcha you got!' }],
-                                })(<Input />)}
-                            </Col>
-                            <Col span={12}>
-                                <Button>Get captcha</Button>
-                            </Col>
-                        </Row>
-                    </Form.Item>
-                    <Form.Item {...tailFormItemLayout}>
-                        {getFieldDecorator('agreement', {
-                            valuePropName: 'checked',
-                        })(
-                            <Checkbox>
-                                I have read the <a href="">agreement</a>
-                            </Checkbox>,
-                        )}
-                    </Form.Item>
+
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
                             Register
@@ -259,4 +261,4 @@ class AddEdit extends React.Component {
 }
 const WrappedRegistrationForm = Form.create({ name: 'register' })(AddEdit);
 
-export default WrappedRegistrationForm; AddEdit
+export default WrappedRegistrationForm;

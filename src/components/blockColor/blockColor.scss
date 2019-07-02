@@ -1,0 +1,16 @@
+.block-color{
+    display: flex;
+        height: 20px;
+        line-height: 20px;
+        position: relative;
+    .item {
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        margin-right: 10px;
+        position: relative;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+}

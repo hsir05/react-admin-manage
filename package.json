@@ -8,6 +8,7 @@
     "@typescript-eslint/eslint-plugin": "1.6.0",
     "@typescript-eslint/parser": "1.6.0",
     "antd": "^3.20.0",
+    "antd-theme-generator": "^1.1.7",
     "babel-eslint": "10.0.1",
     "babel-jest": "^24.8.0",
     "babel-loader": "8.0.5",
@@ -61,9 +62,9 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "node color && node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node color && node scripts/test.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -144,5 +145,6 @@
     "babel-plugin-import": "^1.12.0",
     "less": "^2.7.2",
     "less-loader": "^5.0.0"
-  }
+  },
+  "proxy": "http://192.168.3.213:9001"
 }
