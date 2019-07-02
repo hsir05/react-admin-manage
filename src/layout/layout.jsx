@@ -37,7 +37,6 @@ class LayOuts extends Component {
           return <Redirect to="/404" />
       }
       let { isRedirect, keys } = menuIsRoutes(currentPath, this.props.menu)
-      console.log(keys)
       if (!isRedirect){
           return <Redirect to="/404" />
       }

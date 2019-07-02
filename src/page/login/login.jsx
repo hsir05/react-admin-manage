@@ -1,5 +1,6 @@
 import React from 'react'
 import API from '../../api/api'
+import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import './login.scss'
 
@@ -77,13 +78,13 @@ class WrappedLoginApp extends React.Component {
                 <Checkbox>记住密码</Checkbox>
               )}
             </FormItem>
-            <FormItem style={{marginBottom:'0'}}>  <a className="login-form-forgot" href="">忘记密码</a></FormItem>
+                    <FormItem style={{ marginBottom: '0' }}>  <Link className="login-form-forgot" to="">忘记密码</Link></FormItem>
           </div>
 
             <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
               登录
             </Button>
-            <a href="" style={{marginTop:'10px', display:'inline-block'}}>注册</a>
+            <Link to='' style={{ marginTop: '10px', display: 'inline-block' }}>注册</Link>
         </Form>
       </section>
     )

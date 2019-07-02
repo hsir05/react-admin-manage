@@ -16,6 +16,7 @@ class SlideBar extends React.Component {
   render() {
     let menuList = null
     menuList = (
+    /*eslint-disable*/
       this.props.menu.map(item => {
         if (item.children.length !== 0) {
           return (
@@ -36,6 +37,7 @@ class SlideBar extends React.Component {
             <Menu.Item key={item.key}><Link to={item.url}><Icon type="inbox" /><span>{item.menu}</span></Link>   </Menu.Item>
           )
         }
+        
       })
     )
     return (

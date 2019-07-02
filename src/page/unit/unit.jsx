@@ -81,9 +81,11 @@ class Unit extends React.Component {
 
     itemRender (current, type, originalElement) {
         if (type === 'prev') {
-            return <a>上一页</a>;
+            // eslint-disable-next-line
+            return <a> 上一页</a>;
         } if (type === 'next') {
-            return <a>下一页</a>;
+            // eslint-disable-next-line
+            return <a >下一页</a>;
         }
         return originalElement;
     }

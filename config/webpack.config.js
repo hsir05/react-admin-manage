@@ -407,7 +407,7 @@ module.exports = function(webpackEnv) {
                         sourceMap: isEnvProduction && shouldUseSourceMap,
                     },
                     'less-loader', 
-                    { javascriptEnabled: true, modifyVars: { "primary-color": "#fa8c16", } }
+                    { javascriptEnabled: true, modifyVars: { "primary-color": "#1890ff", } }
                 ),
 
                 sideEffects: true,
@@ -422,7 +422,7 @@ module.exports = function(webpackEnv) {
                         getLocalIdent: getCSSModuleLocalIdent,
                     },
                     'less-loader',
-                    { javascriptEnabled: true, modifyVars: { "@primary-color": "#fa8c16", } }
+                    { javascriptEnabled: true, modifyVars: { "@primary-color": "#1890ff", } }
                 ),
             },
             {

@@ -81,8 +81,10 @@ class Users extends React.Component {
 
     itemRender (current, type, originalElement) {
         if (type === 'prev') {
+            // eslint-disable-next-line
             return <a>上一页</a>;
         } if (type === 'next') {
+        // eslint-disable-next-line
             return <a>下一页</a>;
         }
         return originalElement;

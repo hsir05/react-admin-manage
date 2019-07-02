@@ -14,6 +14,7 @@ class RouteComp extends React.Component {
             replace({ pathname: `/login`, search: window.location.href })
         }
         let currentPath = this.props.path
+        
         !menuIsRoutes(currentPath, this.props.menu) && replace({ pathname: `/404` })
     }
     render () {
