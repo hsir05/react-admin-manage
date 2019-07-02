@@ -1,5 +1,9 @@
+@import '../../style/theme.scss';
 .setting{
   height:82vh;
   padding:30px;
   background-color:white;
+  .setting-title{
+      border-bottom: 1px solid $borderColor;
+  }
 }

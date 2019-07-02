@@ -1,7 +1,7 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import './setting.scss'
-import { Button, message} from 'antd';
+import {message} from 'antd';
 import BlockColor from '../../components/blockColor/blockColor.jsx'
 import less from 'less';
 
@@ -37,8 +37,7 @@ class About extends React.Component {
       <section >
         <BreadCrumb   {...this.state.data} />
             <div className='setting'>
-                <Button type="primary" onClick={() => { this.changeTheme() } }>Primary</Button>
-                <h3>主题设置</h3>
+                <h3 className="setting-title">主题设置</h3>
                 <BlockColor
                     list={[
                         {

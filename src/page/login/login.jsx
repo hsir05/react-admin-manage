@@ -41,7 +41,7 @@ class WrappedLoginApp extends React.Component {
         let data = {userName: 'test', id: 'asdfsa234123', avatar: 'adfasdfswr234'}
         sessionStorage.setItem('user', JSON.stringify(data))
         this.props.setUserInfo(data)
-        this.props.history.push('/')  
+        this.props.history.push('/home')  
         // this.login(values)
       }
     });
