@@ -3,8 +3,8 @@ import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import './setting.scss'
 import { Button, message} from 'antd';
 import BlockColor from '../../components/blockColor/blockColor.jsx'
-
 import less from 'less';
+
 class About extends React.Component {
   constructor (props) {
     super(props)
@@ -23,7 +23,10 @@ class About extends React.Component {
                 '@btn-primary-bg': val,
             }
             )
-            .then(() => { })
+            .then(() => {
+                message.success(`主题切换成功!`);
+                localStorage.setItem('theme', val)
+            })
             .catch(error => {
                 message.error(`Failed to update theme`);
             });
