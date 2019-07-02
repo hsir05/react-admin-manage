@@ -83,3 +83,12 @@ export function argType(arg, type) {
         return false
     }
 }
+
+export const validateForm = {
+    name: [{ required: true, message: '请输入单位名称', }],
+    en_name: [{ required: true, message: '请输入单位英文名称', }],
+    code: [{ required: true, message: '请输入单位单位代码', }],
+    address: [{ type: 'array', required: true, message: '请选择单位地址' }],
+    introduction: [{ required: true, message: '请输入介绍', }],
+    logo: [{ required: true, message: '请上传logo', },],
+}

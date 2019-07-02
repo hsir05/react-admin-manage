@@ -2,6 +2,7 @@ import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 // import API from '../../api/api'
 import { Form, Input, Cascader, Button, Upload, Icon, message } from 'antd';
+import { validateForm} from '../../util/util.js'
 const { TextArea } = Input;
 
 const residences = [
@@ -82,7 +83,6 @@ class AddEdit extends React.Component {
             return;
         }
         if (info.file.status === 'done') {
-            // Get this url from response in real world.
             getBase64(info.file.originFileObj, imageUrl =>
                 this.setState({
                     imageUrl,
@@ -162,80 +162,34 @@ class AddEdit extends React.Component {
                 <BreadCrumb   {...this.state.data} />
                 <Form {...formItemLayout} onSubmit={this.handleSubmit}>
                     <Form.Item label="单位名称">
-                        {getFieldDecorator('name', {
-                            rules: [
-                                {
-                                    type: 'name',
-                                    message: 'The input is not valid E-mail!',
-                                },
-                                {
-                                    required: true,
-                                    message: 'Please input your E-mail!',
-                                },
-                            ],
-                        })(<Input />)}
+                        {getFieldDecorator('name', { rules: validateForm.name })(<Input />)}
                     </Form.Item>
-                    <Form.Item label="单位英文名" hasFeedback>
-                        {getFieldDecorator('en_name', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Please input your password!',
-                                },
-                                {
-                                    validator: this.validateToNextPassword,
-                                },
-                            ],
-                        })(<Input />)}
+                    <Form.Item label="单位英文名称">
+                        {getFieldDecorator('en_name', { rules: validateForm.en_name})(<Input />)}
                     </Form.Item>
 
-                    <Form.Item label="单位代码" hasFeedback>
+                    <Form.Item label="单位代码" >
                         {getFieldDecorator('code', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Please confirm your password!',
-                                },
-                                {
-                                    validator: this.compareToFirstPassword,
-                                },
-                            ],
+                            rules: validateForm.code
                         })(<Input onBlur={this.handleConfirmBlur} />)}
                     </Form.Item>
 
                     <Form.Item label="单位地址">
                         {getFieldDecorator('address', {
-                            initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-                            rules: [
-                                { type: 'array', required: true, message: 'Please select your habitual residence!' },
-                            ],
+                            initialValue: [],
+                            rules: validateForm.address
                         })(<Cascader options={residences} />)}
                     </Form.Item>
 
                     <Form.Item label="介绍">
                         {getFieldDecorator('introduction', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Please input your password!',
-                                },
-                                {
-                                    validator: this.validateToNextPassword,
-                                },
-                            ],
+                            rules: validateForm.introduction
                         })(<TextArea rows={4} />)}
                     </Form.Item>
-                    <Form.Item label="介绍">
-                        {getFieldDecorator('introduction', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Please input your password!',
-                                },
-                                {
-                                    validator: this.validateToNextPassword,
-                                },
-                            ],
+
+                    <Form.Item label="logo">
+                        {getFieldDecorator('logo', {
+                            rules: validateForm.logo
                         })(<Upload
                             name="avatar"
                             listType="picture-card"
