@@ -10,13 +10,24 @@ const { Option } = Select;
 class AddEdit extends React.Component {
     state = {
         loading: false,
-        imageUrl: '',
+        imageUrl: null,
         data: {
             list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/unitManager', menuName: '单位管理', icon: 'appstore' }, { url: null, menuName: '添加单位', icon: '' }],
             btn: { addUrl: '/unitManager', btnName: '返回', icon: 'left' }
-        },
+        }, 
     };
-    componentWillMount () {
+    componentDidMount () {
+        // let option = {
+        //     address: "兰州南山路",
+        //     unitType: 0,
+        //     code: "10018",
+        //     en_name: "NorthWestMinzuUniversity",
+        //     introduction: "西北民族大学（Northwest Minzu University），简称“西北民大”",
+        //     logo: "https://innovation-img-1257635584.cos.ap-chengdu.myqcloud.com/1126690710142058496.png",
+        //     name: "西北民族大学"
+        // }
+        // this.props.form.setFieldsValue(option)
+        // this.setState({ imageUrl: option.logo})
     }
     handleSubmit = e => {
         e.preventDefault();
@@ -174,6 +185,7 @@ class AddEdit extends React.Component {
         );
     }
 }
-const WrappedRegistrationForm = Form.create({ name: '保存' })(AddEdit);
+
+const WrappedRegistrationForm = Form.create()(AddEdit);
 
 export default WrappedRegistrationForm;

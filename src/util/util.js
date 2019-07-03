@@ -150,3 +150,8 @@ export const typeList = [
         name: '教育厅'
     },
 ]
+
+export function getUnitType (type) {
+    let item = typeList.find(item => item.type === type)
+    return item ? item.name : ''
+}

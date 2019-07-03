@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import API from '../../api/api'
 import Search from '../../components/search/search.jsx'
+import { getUnitType } from '../../util/util.js'
+
 import './unit.scss'
 
 class Unit extends React.Component {
@@ -19,11 +21,11 @@ class Unit extends React.Component {
                 { title: 'logo', dataIndex: 'logo', render: logo => <img src={logo} width="25" height="25" alt="logo"/>, },
                 { title: '单位名称', dataIndex: 'name' },
                 // { title: '单位英文名', dataIndex: 'en_name' },
-                { title: '类型', dataIndex: 'type'},
+                { title: '类型', dataIndex: 'type', render: type => <span> {getUnitType(type)}</span>},
                 { title: '单位代码', dataIndex: 'code' },
                 { title: '单位地址', dataIndex: 'address' },
                 // { title: '介绍', dataIndex: 'introduction' },
-                { title: '状态', dataIndex: 'status' },
+                // { title: '状态', dataIndex: 'status' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
                         <p>
