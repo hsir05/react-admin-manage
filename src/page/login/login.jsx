@@ -23,7 +23,6 @@ class WrappedLoginApp extends React.Component {
     try {
       let result = await API.login(values)
       if (result.code === 200) {
-          console.log(result)
           message.success('登陆成功')
           let token = result.attr.user_token
           sessionStorage.setItem('token', token)

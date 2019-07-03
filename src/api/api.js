@@ -39,10 +39,10 @@ class API extends Server{
     }
   }
 
-  async addArticle(params = {}){
+  async addUnit(params = {}){
     try{
-      let result = await this.axios('post', '/article', params)
-      if(result && result.status === '0'){
+        let result = await this.axios('post', '/admin/unit/addUnit', params)
+        if (result && result.code === 200) {
         return result
       }else{
         throw result

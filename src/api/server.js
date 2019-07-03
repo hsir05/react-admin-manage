@@ -1,5 +1,5 @@
 import axios from 'axios';
-import envconfig from '../envconfig/envconfig';
+import { baseURL} from '../envconfig/envconfig';
 import { message } from 'antd';
 import { getSessionToken, removeSession } from '../util/util.js'
 
@@ -26,7 +26,7 @@ export default class Server {
       _option = {
         method,
         url,
-        baseURL: envconfig.baseURL,
+        baseURL: baseURL,
         timeout: 30000,
         params: null,
         data: null,

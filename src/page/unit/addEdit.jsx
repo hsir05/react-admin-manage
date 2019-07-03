@@ -1,131 +1,79 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-// import API from '../../api/api'
-import { Form, Input, Cascader, Button, Upload, Icon, message } from 'antd';
-import { validateForm} from '../../util/util.js'
+import { imgUpload} from '../../envconfig/envconfig.js'
+import API from '../../api/api'
+import { Form, Input, Select, Button, Upload, Icon, message } from 'antd';
+import { validateForm, getSessionToken, typeList} from '../../util/util.js'
 const { TextArea } = Input;
-
-const residences = [
-    {
-        value: 'zhejiang',
-        label: 'Zhejiang',
-        children: [
-            {
-                value: 'hangzhou',
-                label: 'Hangzhou',
-                children: [
-                    {
-                        value: 'xihu',
-                        label: 'West Lake',
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        value: 'jiangsu',
-        label: 'Jiangsu',
-        children: [
-            {
-                value: 'nanjing',
-                label: 'Nanjing',
-                children: [
-                    {
-                        value: 'zhonghuamen',
-                        label: 'Zhong Hua Men',
-                    },
-                ],
-            },
-        ],
-    },
-];
-
-function getBase64 (img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-}
-
-function beforeUpload (file) {
-    const isJPG = file.type === 'image/jpeg';
-    if (!isJPG) {
-        message.error('You can only upload JPG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJPG && isLt2M;
-}
+const { Option } = Select;
 
 class AddEdit extends React.Component {
     state = {
-        confirmDirty: false,
         loading: false,
-        autoCompleteResult: [],
+        imageUrl: '',
         data: {
             list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/unitManager', menuName: '单位管理', icon: 'appstore' }, { url: null, menuName: '添加单位', icon: '' }],
             btn: { addUrl: '/unitManager', btnName: '返回', icon: 'left' }
         },
     };
-
+    componentWillMount () {
+    }
     handleSubmit = e => {
         e.preventDefault();
+        if (this.state.imageUrl) {
+            this.props.form.setFieldsValue({
+                logo: this.state.imageUrl,
+            });
+        }
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                this.addData(values)
             }
         });
     };
+    addData = async (values) => {
+        this.setState({ loading: true })
+        try {
+            let result = await API.addUnit(values)
+            result.code === 200 && message.success('保存成功')
+            this.setState({ loading: false, imageUrl: ''})
+            this.props.form.resetFields();
+        } catch (err) {
+            this.setState({ loading: false })
+            console.warn(err)
+        }
+    }
     handleChange = info => {
         if (info.file.status === 'uploading') {
             this.setState({ loading: true });
             return;
         }
         if (info.file.status === 'done') {
-            getBase64(info.file.originFileObj, imageUrl =>
-                this.setState({
-                    imageUrl,
-                    loading: false,
-                }),
-            );
+            if (info.file.response.code >= 600) {
+                message.error(info.file.response.msg)
+                setTimeout(() => {
+                    this.props.history.push('/login')
+                }, 1500);
+            } 
+            let imgUrl = info.fileList[0].response.data
+            this.setState({ imageUrl: imgUrl, loading: false, })
         }
     };
-
-    handleConfirmBlur = e => {
-        const { value } = e.target;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-    };
-
-    compareToFirstPassword = (rule, value, callback) => {
-        const { form } = this.props;
-        if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!');
-        } else {
-            callback();
+    beforeUpload = file =>{
+        const isJPG = file.type === 'image/jpeg';
+        if (!isJPG) {
+            message.error('You can only upload JPG file!');
         }
-    };
-
-    validateToNextPassword = (rule, value, callback) => {
-        const { form } = this.props;
-        if (value && this.state.confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+            message.error('Image must smaller than 2MB!');
         }
-        callback();
-    };
-
-    handleWebsiteChange = value => {
-        let autoCompleteResult;
-        if (!value) {
-            autoCompleteResult = [];
-        } else {
-            autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-        }
-        this.setState({ autoCompleteResult });
-    };
+        return isJPG && isLt2M;
+    }
 
     render () {
         const { getFieldDecorator } = this.props.form;
+        const headers = { user_token: getSessionToken()}
         const formItemLayout = {
             labelCol: {
                 xs: { span: 14 },
@@ -160,7 +108,7 @@ class AddEdit extends React.Component {
         return (
             <section>
                 <BreadCrumb   {...this.state.data} />
-                <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+                <Form {...formItemLayout} onSubmit={this.handleSubmit} className="form-wrap">
                     <Form.Item label="单位名称">
                         {getFieldDecorator('name', { rules: validateForm.name })(<Input />)}
                     </Form.Item>
@@ -171,14 +119,26 @@ class AddEdit extends React.Component {
                     <Form.Item label="单位代码" >
                         {getFieldDecorator('code', {
                             rules: validateForm.code
-                        })(<Input onBlur={this.handleConfirmBlur} />)}
+                        })(<Input />)}
+                    </Form.Item>
+                    <Form.Item label="单位类型" >
+                        {getFieldDecorator('unitType', {
+                            rules: validateForm.unitType
+                        })(<Select style={{ width: 200 }} placeholder="请选择类型">
+                            {
+                                typeList.map(item => {
+                                    return (
+                                        <Option key={item.id} value={item.type}> {item.name}</Option>
+                                    )
+                                })
+                            }
+                        </Select>)}
                     </Form.Item>
 
                     <Form.Item label="单位地址">
                         {getFieldDecorator('address', {
-                            initialValue: [],
                             rules: validateForm.address
-                        })(<Cascader options={residences} />)}
+                        })(<Input />)}
                     </Form.Item>
 
                     <Form.Item label="介绍">
@@ -191,12 +151,13 @@ class AddEdit extends React.Component {
                         {getFieldDecorator('logo', {
                             rules: validateForm.logo
                         })(<Upload
-                            name="avatar"
+                            name="file"
+                            headers={headers}
                             listType="picture-card"
                             className="avatar-uploader"
                             showUploadList={false}
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                            beforeUpload={beforeUpload}
+                            action={imgUpload }
+                            beforeUpload={this.beforeUpload}
                             onChange={this.handleChange}
                         >
                             {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
@@ -205,7 +166,7 @@ class AddEdit extends React.Component {
 
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
-                            Register
+                            保存
                     </Button>
                     </Form.Item>
                 </Form>

@@ -10,11 +10,11 @@ class Unit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            articleList: [],
+            list: [],
             loading: false,
             total: 0,
-            page: 1,
-            pageSize: 10,
+            page: 0,
+            size: 10,
             columns: [
                 { title: 'logo', dataIndex: 'logo', render: logo => <img src={logo} width="25" height="25" alt="logo"/>, },
                 { title: '单位名称', dataIndex: 'name' },
@@ -51,35 +51,43 @@ class Unit extends React.Component {
     }
 
     componentDidMount () {
-        this.getDate()
+        let option = {
+            page: this.state.page,
+            size: this.state.size
+        }
+        this.getDate(option)
     }
 
     getDate = async (values) => {
         this.setState({ loading: true })
         try {
-            let result = await API.getUnitList()
-            this.setState({ articleList: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0)})
+            let result = await API.getUnitList(values)
+            this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0)})
         } catch (err) {
             this.setState({ loading: false })
             console.warn(err)
         }
     }
 
-    deleteSel = async (id) => {
-        try {
-            let result = await API.delteArticle({ id: id })
-            if (result.status === '0') {
-                this.getDate()
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    // deleteSel = async (id) => {
+    //     try {
+    //         let result = await API.delteArticle({ id: id })
+    //         if (result.status === '0') {
+    //             this.getDate()
+    //         }
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
 
     handlePage (page) {
         console.log(page)
+        let option = {
+            page: page - 1,
+            size: this.state.size
+        }
         this.setState({ page: page }, () => {
-            this.getDate()
+            this.getDate(option)
         })
     }
 
@@ -102,7 +110,7 @@ class Unit extends React.Component {
                 <div style={{ background: 'white', padding: '15px', paddingTop: '0' }}>
                     <Search getDate={this.getDate} />
                     <div className="table-wrap">
-                        <Table rowSelection={this.state.rowSelection} bordered loading={this.state.loading} pagination={false} columns={this.state.columns} rowKey={'id'} dataSource={this.state.articleList} />
+                        <Table rowSelection={this.state.rowSelection} bordered loading={this.state.loading} pagination={false} columns={this.state.columns} rowKey={'id'} dataSource={this.state.list} />
                     </div>
                     <Pagination onChange={this.handlePage.bind(this)} total={this.state.total} itemRender={this.itemRender.bind(this)} />
                 </div>

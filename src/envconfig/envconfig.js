@@ -1,13 +1,6 @@
 /**
  * 全局配置文件
  */
-let baseURL;
-let imgUrl = '//cangdu.org:8001/img/';
-if(process.env.NODE_ENV === 'development'){
-  baseURL = '';
-}else{
-  baseURL = '/api';
-}
+export const baseURL = process.env.NODE_ENV === 'development' ? '' : 'api';
+export const imgUpload = '/admin/upload/uploadImg'
 
-
-export default {imgUrl, baseURL}

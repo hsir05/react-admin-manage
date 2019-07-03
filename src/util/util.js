@@ -109,9 +109,10 @@ export const validateForm = {
     name: [{ required: true, message: '请输入单位名称', }],
     en_name: [{ required: true, message: '请输入单位英文名称', }],
     code: [{ required: true, message: '请输入单位单位代码', }],
-    address: [{ type: 'array', required: true, message: '请选择单位地址' }],
+    address: [{ required: true, message: '请选择单位地址' }],
     introduction: [{ required: true, message: '请输入介绍', }],
     logo: [{ required: true, message: '请上传logo', },],
+    unitType: [{ required: true, message: '请选择单位类型', },],
 
     loginAccount: [{ required: true, message: '请输入账号', }],
     nickName: [{ required: true, message: '请输入昵称', }],
@@ -122,3 +123,30 @@ export const validateForm = {
     birthday: [{ required: true, message: '请选择出生日期', },],
 
 }
+export const typeList = [
+    {
+        id: '1231sdf',
+        type: 0,
+        name: '学校'
+    },
+    {
+        id: '1www231sdf',
+        type: 1,
+        name: '企业'
+    },
+    {
+        id: '12eee31sdf',
+        type: 2,
+        name: '空间'
+    },
+    {
+        id: '123rrrr1sdf',
+        type: 3,
+        name: '孵化器'
+    },
+    {
+        id: '123rrrrddd1sdf',
+        type: 4,
+        name: '教育厅'
+    },
+]
