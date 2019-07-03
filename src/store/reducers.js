@@ -27,11 +27,20 @@ function userInfo (state = defaultState.userInfo, action) {
             return state
     }
 }
+function token (state = defaultState.token, action) {
+    switch (action.type) {
+        case 'SET_TOKEN':
+            return action.data
+        default:
+            return state
+    }
+}
 
 
 // 导出所有reducer
 export default combineReducers({
     pageTitle,
     userInfo,
-    menu
+    menu,
+    token
 })

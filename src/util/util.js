@@ -83,6 +83,27 @@ export function argType(arg, type) {
         return false
     }
 }
+/**
+ *  获取存储在session中的用户信息
+ * */
+export function getSessionUserInfo () {
+    const user = sessionStorage.getItem('user')
+    return user ? JSON.parse(user) : {}
+}
+/**
+ *  获取存储在session中的token
+ * */
+export function getSessionToken () {
+    const token = sessionStorage.getItem('token')
+    return token ? token : ''
+}
+/**
+ * 移除sessionStorage信息
+ *  */
+export function removeSession () {
+    sessionStorage.removeItem('user')
+    sessionStorage.removeItem('token')
+}
 
 export const validateForm = {
     name: [{ required: true, message: '请输入单位名称', }],
@@ -91,4 +112,13 @@ export const validateForm = {
     address: [{ type: 'array', required: true, message: '请选择单位地址' }],
     introduction: [{ required: true, message: '请输入介绍', }],
     logo: [{ required: true, message: '请上传logo', },],
+
+    loginAccount: [{ required: true, message: '请输入账号', }],
+    nickName: [{ required: true, message: '请输入昵称', }],
+    realName: [{ required: true, message: '请输入真实姓名', }],
+    phone: [{ required: true, message: '请输入电话号码' }],
+    email: [{ required: true, message: '请输入邮箱', }], 
+    gender: [{ required: true, message: '请选择性别', }],
+    birthday: [{ required: true, message: '请选择出生日期', },],
+
 }

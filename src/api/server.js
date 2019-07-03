@@ -1,5 +1,8 @@
 import axios from 'axios';
 import envconfig from '../envconfig/envconfig';
+import { message } from 'antd';
+import { getSessionToken, removeSession } from '../util/util.js'
+
 /**
  * 主要params参数
  * @params method {string} 方法名
@@ -27,8 +30,8 @@ export default class Server {
         timeout: 30000,
         params: null,
         data: null,
-        headers: null,
-        withCredentials: true, //是否携带cookies发起请求
+        headers: { user_token: getSessionToken(),},
+        withCredentials: false, //是否携带cookies发起请求
         validateStatus:(status)=>{
             return status >= 200 && status < 300;
         }
@@ -36,10 +39,23 @@ export default class Server {
       if (method === 'get' || method === 'delete') {
         _option.params = params
       } else {
-        _option.data = params
+          var searchParams = new URLSearchParams()
+          for (let key in params) {
+              searchParams.set(key, params[key])
+          }
+          _option.data = searchParams
       }
       axios.request(_option).then(res => {
-        resolve(typeof res.data === 'object' ? res.data : JSON.parse(res.data))
+          if (res.data.code === 600 || res.data.code === 601 || res.data.code === 602) {
+              message.error(res.data.msg)
+              removeSession()
+              setTimeout(() => {
+                  window.location.href = `http://${window.location.host}/login`
+              }, 1500);
+              reject()
+          } else {
+              resolve(typeof res === 'object' ? res.data : JSON.parse(res.data))
+          }
       },
       error => {
         if(error.response){

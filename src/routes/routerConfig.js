@@ -4,6 +4,7 @@ import Users from '../page/users/users.jsx'
 import Unit from '../page/unit/unit.jsx'
 import Auth from '../page/auth/auth.jsx'
 import UnitAddEdit from '../page/unit/addEdit.jsx'
+import UsersAddEdit from '../page/users/addEdit.jsx'
 
 // import Add from '../page/home/add.jsx'
 // 定义路由不允许有相同的出现 如 /home/home
@@ -25,6 +26,12 @@ const routes = [
         auth: true,
         path: '/usersManager',
         component: Users
+    },
+    {
+        name: '添加管理员',
+        auth: true,
+        path: '/usersAddEdit',
+        component: UsersAddEdit
     },
     {
         name: '单位管理',

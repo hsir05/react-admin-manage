@@ -213,6 +213,6 @@ class AddEdit extends React.Component {
         );
     }
 }
-const WrappedRegistrationForm = Form.create({ name: 'register' })(AddEdit);
+const WrappedRegistrationForm = Form.create({ name: '保存' })(AddEdit);
 
 export default WrappedRegistrationForm;

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setUserInfo } from '../../store/actions.js'
+import { setUserInfo, seToken } from '../../store/actions.js'
 import Login from './login.jsx'
 
 const mapStateToProps = (state) => {
@@ -12,6 +12,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         setUserInfo (data) {
             dispatch(setUserInfo(data))
+        },
+        seToken (data) {
+            dispatch(seToken(data))
         }
     }
 }

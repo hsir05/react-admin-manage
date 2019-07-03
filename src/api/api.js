@@ -1,5 +1,6 @@
 import Server from './server';
 
+
 class API extends Server{
   /**
    *  用途：上传图片
@@ -30,11 +31,9 @@ class API extends Server{
   async getUnitList(params = {}){
     try{
         let result = await this.axios('post', '/admin/unit/listPageUnit', params)
-      if(result && result.status === '0'){
+      if(result && result.code === 200){
         return result
-      }else{
-        throw result
-      }
+      } 
     }catch(err){
       throw err
     }
@@ -82,10 +81,9 @@ class API extends Server{
   }
 
   async login(params = {}){
-    console.log(params);
     try{
-      let result = await this.axios('post', '/login', params)
-      if(result && result.status === '0'){
+      let result = await this.axios('post', '/admin/login', params)
+      if(result && result.code === 200){
         return result
       }else{
         throw result

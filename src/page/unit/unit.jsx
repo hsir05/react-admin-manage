@@ -16,13 +16,13 @@ class Unit extends React.Component {
             page: 1,
             pageSize: 10,
             columns: [
-                { title: 'logo', dataIndex: 'logo', render: logo => <img src={logo} alt="logo"/>, },
+                { title: 'logo', dataIndex: 'logo', render: logo => <img src={logo} width="25" height="25" alt="logo"/>, },
                 { title: '单位名称', dataIndex: 'name' },
-                { title: '单位英文名', dataIndex: 'en_name' },
+                // { title: '单位英文名', dataIndex: 'en_name' },
                 { title: '类型', dataIndex: 'type'},
                 { title: '单位代码', dataIndex: 'code' },
                 { title: '单位地址', dataIndex: 'address' },
-                { title: '介绍', dataIndex: 'introduction' },
+                // { title: '介绍', dataIndex: 'introduction' },
                 { title: '状态', dataIndex: 'status' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
@@ -51,15 +51,16 @@ class Unit extends React.Component {
     }
 
     componentDidMount () {
-        // this.getDate()
+        this.getDate()
     }
 
     getDate = async (values) => {
-        // this.setState({ loading: true })
+        this.setState({ loading: true })
         try {
             let result = await API.getUnitList()
-            this.setState({ articleList: result.data, loading: false, total: result.total })
+            this.setState({ articleList: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0)})
         } catch (err) {
+            this.setState({ loading: false })
             console.warn(err)
         }
     }
@@ -67,7 +68,6 @@ class Unit extends React.Component {
     deleteSel = async (id) => {
         try {
             let result = await API.delteArticle({ id: id })
-            console.log(result);
             if (result.status === '0') {
                 this.getDate()
             }
@@ -101,7 +101,9 @@ class Unit extends React.Component {
                 <BreadCrumb   {...this.state.data} />
                 <div style={{ background: 'white', padding: '15px', paddingTop: '0' }}>
                     <Search getDate={this.getDate} />
-                    <Table rowSelection={this.state.rowSelection} bordered loading={this.state.loading} pagination={false} columns={this.state.columns} rowKey={'_id'} dataSource={this.state.articleList} />
+                    <div className="table-wrap">
+                        <Table rowSelection={this.state.rowSelection} bordered loading={this.state.loading} pagination={false} columns={this.state.columns} rowKey={'id'} dataSource={this.state.articleList} />
+                    </div>
                     <Pagination onChange={this.handlePage.bind(this)} total={this.state.total} itemRender={this.itemRender.bind(this)} />
                 </div>
             </section>

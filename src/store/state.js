@@ -1,4 +1,5 @@
 // state.js
+import { getSessionUserInfo, getSessionToken} from '../util/util.js'
 
 // 声明默认值
 // 这里我们列举两个示例
@@ -8,6 +9,7 @@
 export default {
     pageTitle: '首页',
     userInfo: getSessionUserInfo(),
+    token: getSessionToken(),
     menu: [
         {
             key: '1', icon: 'appstore', url: '/home', menu: '首页',
@@ -27,6 +29,7 @@ export default {
             children: [
                 { key: '4', url: '/usersManager', icon: 'appstore', menu: '管理员管理', children: [] },
                 { key: '44', url: '/auth', icon: 'appstore', menu: '角色授权', children: [] },
+                { key: '44', url: '/usersAddEdit', hidden: true, icon: 'appstore', menu: '角色授权', children: [] },
             ]
         },
         {
@@ -38,12 +41,3 @@ export default {
         
     ]
 } 
-
-function  getSessionUserInfo() {
-    const user = sessionStorage.getItem('user')
-    if (user) {
-        return JSON.parse(user)
-    } else {
-        return {}
-    }
-}

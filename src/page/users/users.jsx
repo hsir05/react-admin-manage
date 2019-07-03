@@ -14,11 +14,15 @@ class Users extends React.Component {
             loading: false,
             total: 0,
             page: 1,
-            pageSize: 10,
+            pageSize: 10, 
             columns: [
-                { title: '标题222', dataIndex: 'title' },
-                { title: '作者', dataIndex: 'auth' },
-                { title: '添加时间', dataIndex: 'create_at' },
+                { title: '账号', dataIndex: 'loginAccount' },
+                { title: '昵称', dataIndex: 'nickName' },
+                { title: '真实姓名', dataIndex: 'realName' },
+                { title: '电话', dataIndex: 'phone' },
+                { title: '邮箱', dataIndex: 'email' },
+                { title: '性别', dataIndex: 'gender' },
+                { title: '出生日期', dataIndex: 'birthday' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
                         <p>
@@ -31,7 +35,7 @@ class Users extends React.Component {
             ],
             data: {
                 list: [{ url: '/', menuName: '首页', icon: '' }, { url: null, menuName: '角色管理', icon: '' }, { url: null, menuName: '管理员管理', icon: '' }],
-                btn: { addUrl: '/add', btnName: '添加', icon: 'plus' }
+                btn: { addUrl: '/usersAddEdit', btnName: '添加', icon: 'plus' }
             },
             rowSelection: {
                 onChange: (selectedRowKeys, selectedRows) => {

@@ -32,3 +32,8 @@ export function setUserInfo (data) {
         dispatch({ type: 'SET_USER_INFO', data: data })
     }
 }
+export function seToken (data) {
+    return (dispatch, getState) => {
+        dispatch({ type: 'SET_TOKEN', data: data })
+    }
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import API from '../../api/api'
 import { Link } from 'react-router-dom'
-import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
+import { Form, Icon, Input, Button, message } from 'antd';
 import './login.scss'
 
 const FormItem = Form.Item;
@@ -22,15 +22,19 @@ class WrappedLoginApp extends React.Component {
   login = async (values) => {
     try {
       let result = await API.login(values)
-      if (result.status === '0') {
-        this.props.history.push('/home')
-        sessionStorage.setItem('login', JSON.stringify(result))
+      if (result.code === 200) {
+          console.log(result)
+          message.success('登陆成功')
+          let token = result.attr.user_token
+          sessionStorage.setItem('token', token)
+          sessionStorage.setItem('user', JSON.stringify(result.data))
+          this.props.setUserInfo(result.data)
+          this.props.seToken(token)
+          this.props.history.push('/home')
       }
     } catch (err) {
-      console.log(err)
-      if (err.status === '-1') {
-       message.error(err.msg)
-      }
+      console.warn(err)
+        message.error('登陆失败，请稍后重试!')
     }
   }
 
@@ -38,11 +42,11 @@ class WrappedLoginApp extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        let data = {userName: 'test', id: 'asdfsa234123', avatar: 'adfasdfswr234'}
-        sessionStorage.setItem('user', JSON.stringify(data))
-        this.props.setUserInfo(data)
-        this.props.history.push('/home')  
-        // this.login(values)
+        // let data = {userName: 'test', id: 'asdfsa234123', avatar: 'adfasdfswr234'}
+        // sessionStorage.setItem('user', JSON.stringify(data))
+        // this.props.setUserInfo(data)
+        // this.props.history.push('/home')  
+        this.login(values)
       }
     });
   }
@@ -55,14 +59,14 @@ class WrappedLoginApp extends React.Component {
       <section className='login'>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <FormItem>
-            {getFieldDecorator('name', {
+                {getFieldDecorator('username', {
               rules: [{ required: true, message: '请输入你的帐号' }],
             })(
               <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
             )}
           </FormItem>
           <FormItem style={{marginBottom:'6px'}}>
-            {getFieldDecorator('pwd', {
+            {getFieldDecorator('password', {
               rules: [{ required: true, message: '请输入你的密码' }],
             })(
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
@@ -70,14 +74,14 @@ class WrappedLoginApp extends React.Component {
           </FormItem>
 
           <div style={{display:'flex', justifyContent:'space-between'}}>
-            <FormItem style={{marginBottom:'0'}}>
+            {/* <FormItem style={{marginBottom:'0'}}>
               {getFieldDecorator('remember', {
                 valuePropName: 'checked',
                 initialValue: true,
               })(
                 <Checkbox>记住密码</Checkbox>
               )}
-            </FormItem>
+            </FormItem> */}
                     <FormItem style={{ marginBottom: '0' }}>  <Link className="login-form-forgot" to="">忘记密码</Link></FormItem>
           </div>
 
