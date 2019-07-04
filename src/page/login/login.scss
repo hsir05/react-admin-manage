@@ -1,13 +1,44 @@
 @import '../../style/theme.scss';
 .login{
-  width: 300px;
-  margin:0 auto 0 auto;
-  transform: translateY(90%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid $borderColor;
-  border-radius: 5px;
-  padding: 15px;
-  box-shadow: 5px 5px 5px $borderColor;
+    width: 100%;
+    height: 100%;
+    background: url('../../assets/banner.jpg') center no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    
+    .login-title{
+        text-align: center;
+        color: $fontColor3;
+    }
+    .auth-wrap {
+        text-align: center;
+    }
+    .login-wrap{
+        width: 350px;
+        margin:0 auto 0 auto;
+        border: 1px solid $borderColor;
+        border-radius: 5px;
+        padding: 30px;
+        background: #fff;
+        .auth-type{
+            width: 35px;
+            height: 35px;
+            display: inline-block;
+            cursor: pointer;
+        }
+    }
+    .login-auth{
+         text-align: center;
+         font-size: 14px;
+         font-weight: 400;
+         color: $fontColor4;
+         cursor: pointer;
+         user-select: none;
+    }
+    .register-wrap{
+        font-size: 12px;
+        text-align: center;
+        user-select: none;
+    }
 }

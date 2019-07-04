@@ -106,6 +106,9 @@ export function removeSession () {
 }
 
 export const validateForm = {
+    password: [{ required: true, message: '请输入你的密码' }],
+    captcha: [{ required: true, message: '请输入验证码' }],
+
     name: [{ required: true, message: '请输入名称', }],
     en_name: [{ required: true, message: '请输入单位英文名称', }],
     code: [{ required: true, message: '请输入单位代码', }],
@@ -130,6 +133,7 @@ export const validateForm = {
     birthday: [{ required: true, message: '请选择出生日期', },],
     roleCode: [{ required: true, message: '请输入角色code', }],
     category: [{ required: true, message: '请选择分类', }],
+   
     
 }
 export const typeList = [

@@ -16,7 +16,7 @@ class AddEdit extends React.Component {
         unitList: [],
         data: {
             list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/unitManager', menuName: '单位管理', icon: 'appstore' }, { url: null, menuName: '编辑单位', icon: '' }],
-            btn: { addUrl: '/unitManager', btnName: '返回', icon: 'left' }
+            btn: { addUrl: '/usersManager', btnName: '返回', icon: 'left' }
         },
     };
 
@@ -115,7 +115,7 @@ class AddEdit extends React.Component {
                     <Form.Item label="邮箱">
                         {getFieldDecorator('email', { rules: validateForm.email })(<Input />)}
                     </Form.Item>
-                    <Form.Item label="所属单位" >
+                    {/* <Form.Item label="所属单位" >
                         {getFieldDecorator('unitCode', {
                             rules: validateForm.unitCode
                         })(<Select style={{ width: 200 }} placeholder="请选择所属单位">
@@ -141,7 +141,7 @@ class AddEdit extends React.Component {
                                 })
                             }
                         </Select>)}
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">

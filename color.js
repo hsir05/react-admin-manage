@@ -5,7 +5,7 @@ const options = {
     stylesDir: path.join(__dirname, './src/style'),
     antDir: path.join(__dirname, './node_modules/antd'),
     varFile: path.join(__dirname, './src/styles/vars.less'),
-    mainLessFile: path.join(__dirname, './src/styles/main.less'),
+    // mainLessFile: path.join(__dirname, './src/styles/main.less'),
     themeVariables: [
         '@primary-color',
         '@secondary-color',
