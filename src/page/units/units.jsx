@@ -6,7 +6,7 @@ import API from '../../api/api'
 import Search from '../../components/search/search.jsx'
 import { getUnitType } from '../../util/util.js'
 
-import './unit.scss'
+import './units.scss'
 
 class Unit extends React.Component {
     constructor(props) {

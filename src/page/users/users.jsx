@@ -35,7 +35,7 @@ class Users extends React.Component {
             ],
             data: {
                 list: [{ url: '/', menuName: '首页', icon: '' }, { url: null, menuName: '角色管理', icon: '' }, { url: null, menuName: '管理员管理', icon: '' }],
-                btn: { addUrl: '/usersAddEdit', btnName: '添加', icon: 'plus' }
+                btn: { addUrl: '/userAddEdit', btnName: '添加', icon: 'plus' }
             }
         }
     }

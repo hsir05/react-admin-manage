@@ -1,13 +1,12 @@
 import Home from '../page/home/home.jsx'
 import Setting from '../page/setting/setting.jsx'
 import Users from '../page/users/users.jsx'
-import Unit from '../page/unit/unit.jsx'
+import Units from '../page/units/units.jsx'
 import Roles from '../page/roles/roles.jsx'
-import UnitAddEdit from '../page/unit/addEdit.jsx'
-import UsersAddEdit from '../page/users/addEdit.jsx'
-import RolesAddEdit from '../page/roles/addEdit.jsx'
+import UnitAddEdit from '../page/units/addEdit.jsx'
+import UserAddEdit from '../page/users/addEdit.jsx'
+import RoleAddEdit from '../page/roles/addEdit.jsx'
 
-// import Add from '../page/home/add.jsx'
 // 定义路由不允许有相同的出现 如 /home/home
 const routes = [
     {
@@ -31,14 +30,14 @@ const routes = [
     {
         name: '编辑管理员',
         auth: true,
-        path: '/usersAddEdit',
-        component: UsersAddEdit
+        path: '/userAddEdit',
+        component: UserAddEdit
     },
     {
         name: '单位管理',
         auth: true,
-        path: '/unitManager',
-        component: Unit
+        path: '/unitsManager',
+        component: Units
     },
     {
         name: '编辑单位',
@@ -56,7 +55,7 @@ const routes = [
         name: '编辑角色',
         auth: true,
         path: '/roleAddEdit',
-        component: RolesAddEdit
+        component: RoleAddEdit
     },
 ]
 export default routes
