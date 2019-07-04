@@ -18,13 +18,15 @@ export default {
             children: [
                 { key: '4', url: '/usersManager', icon: 'appstore', menu: '管理员管理', children: [] },
                 { key: '44', url: '/roles', icon: 'appstore', menu: '角色管理', children: [] },
-                { key: '44', url: '/roleAddEdit', hidden: true, icon: 'appstore', menu: '编辑角色', children: [] }, 
-                { key: '44', url: '/userAddEdit', hidden: true, icon: 'appstore', menu: '编辑管理员', children: [] },
+                { key: '443', url: '/menusManager', icon: 'appstore', menu: '菜单管理', children: [] },
+                { key: '444', url: '/roleAddEdit', hidden: true, icon: 'appstore', menu: '编辑角色', children: [] }, 
+                { key: '445', url: '/userAddEdit', hidden: true, icon: 'appstore', menu: '编辑管理员', children: [] },
+                { key: '445', url: '/menuAddEdit', hidden: true, icon: 'appstore', menu: '编辑菜单', children: [] },
             ]
         },
         { key: 'sub2', icon: 'setting', menu: '系统管理',
             children: [
-                { key: '5', url: '/setting', icon: 'appstore', menu: '主题设置', children: [] }
+                { key: '51', url: '/setting', icon: 'appstore', menu: '主题设置', children: [] }
             ]
         },
         

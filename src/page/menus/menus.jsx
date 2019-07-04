@@ -4,15 +4,14 @@ import { Link } from 'react-router-dom'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import Search from '../../components/search/search.jsx'
 import API from '../../api/api'
-import './roles.scss'
 
-class Roles extends React.Component {
+class Menus extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             data: {
-                list: [{ url: '/', menuName: '首页', icon: '' }, { url: '', menuName: '角色管理', icon: '' },  { url: '', menuName: '角色授权', icon: '' }],
-                btn: { addUrl: '/roleAddEdit', btnName: '添加', icon: 'plus' }
+                list: [{ url: '/', menuName: '首页', icon: '' }, { url: '', menuName: '菜单管理', icon: '' }],
+                btn: { addUrl: '/menuAddEdit', btnName: '添加', icon: 'plus' }
             },
             list: [],
             loading: false,
@@ -89,4 +88,4 @@ class Roles extends React.Component {
     }
 }
 
-export default Roles;
+export default Menus;

@@ -3,9 +3,12 @@ import Setting from '../page/setting/setting.jsx'
 import Users from '../page/users/users.jsx'
 import Units from '../page/units/units.jsx'
 import Roles from '../page/roles/roles.jsx'
+import Menus from '../page/menus/menus.jsx'
+
 import UnitAddEdit from '../page/units/addEdit.jsx'
 import UserAddEdit from '../page/users/addEdit.jsx'
 import RoleAddEdit from '../page/roles/addEdit.jsx'
+import MenuAddEdit from '../page/menus/addEdit.jsx'
 
 // 定义路由不允许有相同的出现 如 /home/home
 const routes = [
@@ -56,6 +59,18 @@ const routes = [
         auth: true,
         path: '/roleAddEdit',
         component: RoleAddEdit
+    },
+    {
+        name: '菜单管理',
+        auth: true,
+        path: '/menusManager',
+        component: Menus
+    },
+    {
+        name: '编辑菜单',
+        auth: true,
+        path: '/menuAddEdit',
+        component: MenuAddEdit
     },
 ]
 export default routes
