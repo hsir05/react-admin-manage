@@ -106,22 +106,32 @@ export function removeSession () {
 }
 
 export const validateForm = {
-    name: [{ required: true, message: '请输入单位名称', }],
+    name: [{ required: true, message: '请输入名称', }],
     en_name: [{ required: true, message: '请输入单位英文名称', }],
-    code: [{ required: true, message: '请输入单位单位代码', }],
+    code: [{ required: true, message: '请输入单位代码', }],
     address: [{ required: true, message: '请选择单位地址' }],
     introduction: [{ required: true, message: '请输入介绍', }],
     logo: [{ required: true, message: '请上传logo', },],
+    unitCode: [{ required: true, message: '请选择所属单位', },],
     unitType: [{ required: true, message: '请选择单位类型', },],
 
     loginAccount: [{ required: true, message: '请输入账号', }],
     nickName: [{ required: true, message: '请输入昵称', }],
     realName: [{ required: true, message: '请输入真实姓名', }],
-    phone: [{ required: true, message: '请输入电话号码' }],
-    email: [{ required: true, message: '请输入邮箱', }], 
+    phone: [
+        { required: true, message: '请输入正确格式的电话号码' },
+        { pattern: /^((\+)?86|((\+)?86)?)0?1[3458]\d{9}$/, message: '请输入正确格式的电话号码'}
+    ],
+    email: [
+        { required: true, message: '请输入正确格式的邮箱账号', }, 
+        { type: 'email', message: '请输入正确格式的邮箱账号', }
+    ], 
     gender: [{ required: true, message: '请选择性别', }],
     birthday: [{ required: true, message: '请选择出生日期', },],
+    roleCode: [{ required: true, message: '请输入角色code', }],
 
+
+    
 }
 export const typeList = [
     {

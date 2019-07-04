@@ -2,47 +2,40 @@ import React from 'react'
 import { Table, Button, Popconfirm, Pagination } from 'antd'
 import { Link } from 'react-router-dom'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-import API from '../../api/api'
 import Search from '../../components/search/search.jsx'
-import { getUnitType } from '../../util/util.js'
+import API from '../../api/api'
+import './roles.scss'
 
-import './unit.scss'
-
-class Unit extends React.Component {
+class Auth extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            data: {
+                list: [{ url: '/', menuName: '首页', icon: '' }, { url: '', menuName: '角色管理', icon: '' },  { url: '', menuName: '角色授权', icon: '' }],
+                btn: { addUrl: '/roleAddEdit', btnName: '添加', icon: 'plus' }
+            },
             list: [],
             loading: false,
             total: 0,
             page: 0,
             size: 10,
             columns: [
-                { title: 'logo', dataIndex: 'logo', render: logo => <img src={logo} width="25" height="25" alt="logo"/>, },
-                { title: '单位名称', dataIndex: 'name' },
-                // { title: '单位英文名', dataIndex: 'en_name' },
-                { title: '类型', dataIndex: 'type', render: type => <span> {getUnitType(type)}</span>},
-                { title: '单位代码', dataIndex: 'code' },
-                { title: '单位地址', dataIndex: 'address' },
-                // { title: '介绍', dataIndex: 'introduction' },
-                // { title: '状态', dataIndex: 'status' },
+                { title: 'ID', dataIndex: 'id' },
+                { title: 'code', dataIndex: 'code' },
+                { title: '名称', dataIndex: 'name' },
+                { title: '状态', dataIndex: 'status' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
                         <p>
-                            <Popconfirm title="你确定要删除?" onConfirm={() => this.deleteSel(record._id)}>
+                            <Popconfirm title="你确定要删除?" onConfirm={() => this.deleteSel(record.id)}>
                                 <Button type="danger" style={{ marginRight: '5px' }}>删除</Button>
                             </Popconfirm>
                             <Button type="primary" ><Link to={`/edit/${record._id}`}>修改</Link></Button>
                         </p>
                 }
-            ],
-            data: {
-                list: [{ url: '/', menuName: '首页', icon: '' }, { url: null, menuName: '单位管理', icon: '' }],
-                btn: { addUrl: '/unitAddEdit', btnName: '添加', icon: 'plus' }
-            }
+            ]
         }
     }
-
     componentDidMount () {
         let option = {
             page: this.state.page,
@@ -50,29 +43,15 @@ class Unit extends React.Component {
         }
         this.getDate(option)
     }
-
-    getDate = async (values) => {
+    getDate = async (option) => {
         this.setState({ loading: true })
         try {
-            let result = await API.getUnitList(values)
-            this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0)})
+            let result = await API.getRolesList(option)
+            this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0) })
         } catch (err) {
-            this.setState({ loading: false })
-            console.warn(err)
+            console.log(err)
         }
     }
-
-    // deleteSel = async (id) => {
-    //     try {
-    //         let result = await API.delteArticle({ id: id })
-    //         if (result.status === '0') {
-    //             this.getDate()
-    //         }
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
-
     handlePage (page) {
         let option = {
             page: page - 1,
@@ -86,18 +65,17 @@ class Unit extends React.Component {
     itemRender (current, type, originalElement) {
         if (type === 'prev') {
             // eslint-disable-next-line
-            return <a> 上一页</a>;
+            return <a>上一页</a>;
         } if (type === 'next') {
             // eslint-disable-next-line
-            return <a >下一页</a>;
+            return <a>下一页</a>;
         }
         return originalElement;
     }
 
     render () {
-
         return (
-            <section className="users">
+            <section >
                 <BreadCrumb   {...this.state.data} />
                 <div style={{ background: 'white', padding: '15px', paddingTop: '0' }}>
                     <Search getDate={this.getDate} />
@@ -111,4 +89,4 @@ class Unit extends React.Component {
     }
 }
 
-export default Unit;
+export default Auth;

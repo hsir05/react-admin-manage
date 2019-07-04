@@ -51,35 +51,52 @@ class API extends Server{
       throw err
     }
   }
-
-  async delteArticle(params = {}){
-    console.log(params);
-    try{
-      let result = await this.axios('delete', '/article', params)
-      if(result && result.status === '0'){
-        return result
-      }else{
-        throw result
-      }
-    }catch(err){
-      throw err
+  
+    async getUsersList (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/user/listPageAllAdmin', params)
+            if (result && result.code === 200) {
+                return result
+            }
+        } catch (err) {
+            throw err
+        }
     }
-  }
-
-  async updateArticle(params = {}){
-    console.log(params);
-    try{
-      let result = await this.axios('put', '/article', params)
-      if(result && result.status === '0'){
-        return result
-      }else{
-        throw result
-      }
-    }catch(err){
-      throw err
+    async addUser (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/user/addUnitAdmin', params)
+            if (result && result.code === 200) {
+                return result
+            } else {
+                throw result
+            }
+        } catch (err) {
+            throw err
+        }
     }
-  }
-
+    
+   async getRolesList (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/rolePerm/listPageAllRole', params)
+            if (result && result.code === 200) {
+                return result
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+    async addRoles (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/rolePerm/addRole', params)
+            if (result && result.code === 200) {
+                return result
+            } else {
+                throw result
+            }
+        } catch (err) {
+            throw err
+        }
+    }
   async login(params = {}){
     try{
       let result = await this.axios('post', '/admin/login', params)

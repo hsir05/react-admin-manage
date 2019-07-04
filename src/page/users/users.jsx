@@ -10,18 +10,18 @@ class Users extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            articleList: [],
+            list: [],
             loading: false,
             total: 0,
-            page: 1,
-            pageSize: 10, 
+            page: 0,
+            size: 10, 
             columns: [
                 { title: '账号', dataIndex: 'loginAccount' },
                 { title: '昵称', dataIndex: 'nickName' },
                 { title: '真实姓名', dataIndex: 'realName' },
                 { title: '电话', dataIndex: 'phone' },
                 { title: '邮箱', dataIndex: 'email' },
-                { title: '性别', dataIndex: 'gender' },
+                { title: '性别', dataIndex: 'gender', render: gender => <span>{gender === 1 ? '女' : '男'}</span>, },
                 { title: '出生日期', dataIndex: 'birthday' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
@@ -36,29 +36,23 @@ class Users extends React.Component {
             data: {
                 list: [{ url: '/', menuName: '首页', icon: '' }, { url: null, menuName: '角色管理', icon: '' }, { url: null, menuName: '管理员管理', icon: '' }],
                 btn: { addUrl: '/usersAddEdit', btnName: '添加', icon: 'plus' }
-            },
-            rowSelection: {
-                onChange: (selectedRowKeys, selectedRows) => {
-                    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-                },
-                getCheckboxProps: record => ({
-                    disabled: record.name === 'Disabled User',
-                    name: record.name,
-                }),
             }
         }
     }
 
     componentDidMount () {
-        // this.getDate()
+        let option = {
+            page: this.state.page,
+            size: this.state.size
+        }
+        this.getDate(option)
     }
 
-    getDate = async (values) => {
+    getDate = async (option) => {
         this.setState({ loading: true })
-        let par = { ...values, page: this.state.page, pageSize: this.state.pageSize, sort: 'create_at' }
         try {
-            let result = await API.getArticleList(par)
-            this.setState({ articleList: result.data, loading: false, total: result.total })
+            let result = await API.getUsersList(option)
+            this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0) })
         } catch (err) {
             console.log(err)
         }
@@ -101,7 +95,9 @@ class Users extends React.Component {
                 <BreadCrumb   {...this.state.data} />
                 <div style={{ background: 'white', padding: '15px', paddingTop: '0' }}>
                     <Search getDate={this.getDate} />
-                    <Table rowSelection={this.state.rowSelection} bordered loading={this.state.loading} pagination={false} columns={this.state.columns} rowKey={'_id'} dataSource={this.state.articleList} />
+                    <div className="table-wrap">
+                        <Table bordered loading={this.state.loading} pagination={false} columns={this.state.columns} rowKey={'id'} dataSource={this.state.list} />
+                    </div>
                     <Pagination onChange={this.handlePage.bind(this)} total={this.state.total} itemRender={this.itemRender.bind(this)} />
                 </div>
             </section>

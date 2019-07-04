@@ -24,3 +24,30 @@ body {
     width: 80px;
     height: 80px;
 }
+body {
+      .public{
+    display: flex;
+    display: -webkit-flex;
+    color:$fontColor;
+    background: $fontColor;
+  }
+  .ant-table-thead > tr > th{
+    background: $fontColor;
+  }
+  .search{
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: $boxBg2;
+    border-radius: 2px;
+  }
+  .ant-pagination {
+    $h:40px;
+    text-align: right;
+    background: $boxBg2;
+    height: $h;
+    line-height: $h;
+    margin-top: 10px;
+    padding-right: 10px;
+    border-radius: 2px;
+  }
+}

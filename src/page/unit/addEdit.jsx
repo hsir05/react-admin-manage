@@ -121,16 +121,16 @@ class AddEdit extends React.Component {
                 <BreadCrumb   {...this.state.data} />
                 <Form {...formItemLayout} onSubmit={this.handleSubmit} className="form-wrap">
                     <Form.Item label="单位名称">
-                        {getFieldDecorator('name', { rules: validateForm.name })(<Input />)}
+                        {getFieldDecorator('name', { rules: validateForm.name })(<Input maxLength={100}/>)}
                     </Form.Item>
                     <Form.Item label="单位英文名称">
-                        {getFieldDecorator('en_name', { rules: validateForm.en_name})(<Input />)}
+                        {getFieldDecorator('en_name', { rules: validateForm.en_name })(<Input maxLength={130}/>)}
                     </Form.Item>
 
                     <Form.Item label="单位代码" >
                         {getFieldDecorator('code', {
                             rules: validateForm.code
-                        })(<Input />)}
+                        })(<Input maxLength={20}/>)}
                     </Form.Item>
                     <Form.Item label="单位类型" >
                         {getFieldDecorator('unitType', {
@@ -149,13 +149,13 @@ class AddEdit extends React.Component {
                     <Form.Item label="单位地址">
                         {getFieldDecorator('address', {
                             rules: validateForm.address
-                        })(<Input />)}
+                        })(<Input maxLength={100}/>)}
                     </Form.Item>
 
                     <Form.Item label="介绍">
                         {getFieldDecorator('introduction', {
                             rules: validateForm.introduction
-                        })(<TextArea rows={4} />)}
+                        })(<TextArea rows={4} maxLength={100}/>)}
                     </Form.Item>
 
                     <Form.Item label="logo">
