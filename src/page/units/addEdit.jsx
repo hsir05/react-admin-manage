@@ -3,7 +3,7 @@ import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import { imgUpload} from '../../envconfig/envconfig.js'
 import API from '../../api/api'
 import { Form, Input, Select, Button, Upload, Icon, message } from 'antd';
-import { validateForm, getSessionToken, typeList} from '../../util/util.js'
+import { validateForm, getSessionToken, typeList, formItemLayout, tailFormItemLayout} from '../../util/util.js'
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -85,28 +85,6 @@ class AddEdit extends React.Component {
     render () {
         const { getFieldDecorator } = this.props.form;
         const headers = { user_token: getSessionToken()}
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 14 },
-                sm: { span: 8 },
-            },
-            wrapperCol: {
-                xs: { span: 14 },
-                sm: { span: 8 },
-            },
-        };
-        const tailFormItemLayout = {
-            wrapperCol: {
-                xs: {
-                    span: 24,
-                    offset: 0,
-                },
-                sm: {
-                    span: 16,
-                    offset: 8,
-                },
-            },
-        };
 
         const uploadButton = (
             <div>

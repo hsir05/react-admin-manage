@@ -3,7 +3,7 @@ import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import API from '../../api/api'
 import { Form, Input, Button, message, Select, Radio, DatePicker } from 'antd';
 import moment from 'moment';
-import { validateForm, typeList} from '../../util/util.js'
+import { validateForm, typeList, formItemLayout, tailFormItemLayout} from '../../util/util.js'
 
 const dateFormat = 'YYYY/MM/DD';
 const { Option } = Select;
@@ -74,28 +74,6 @@ class AddEdit extends React.Component {
     render () {
         const { getFieldDecorator } = this.props.form;
         const { unitList } = this.state
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 14 },
-                sm: { span: 8 },
-            },
-            wrapperCol: {
-                xs: { span: 14 },
-                sm: { span: 8 },
-            },
-        };
-        const tailFormItemLayout = {
-            wrapperCol: {
-                xs: {
-                    span: 24,
-                    offset: 0,
-                },
-                sm: {
-                    span: 16,
-                    offset: 8,
-                },
-            },
-        };
 
         return (
             <section>

@@ -129,8 +129,7 @@ export const validateForm = {
     gender: [{ required: true, message: '请选择性别', }],
     birthday: [{ required: true, message: '请选择出生日期', },],
     roleCode: [{ required: true, message: '请输入角色code', }],
-
-
+    category: [{ required: true, message: '请选择分类', }],
     
 }
 export const typeList = [
@@ -160,8 +159,56 @@ export const typeList = [
         name: '教育厅'
     },
 ]
-
 export function getUnitType (type) {
     let item = typeList.find(item => item.type === type)
     return item ? item.name : ''
 }
+export const category = [
+    {
+        id: 0,
+        name: '空间分类',
+    },
+    {
+        id: 1,
+        name: '区域分类',
+    },
+    {
+        id: 2,
+        name: '类型分类',
+    },
+    {
+        id: 3,
+        name: '空间服务类型',
+    },
+    {
+        id: 4,
+        name: '企业类型',
+    },
+]
+export function getCategory (id) {
+    let item = category.find(item => item.id === id)
+    return item ? item.name : ''
+}
+
+export const formItemLayout = {
+    labelCol: {
+        xs: { span: 14 },
+        sm: { span: 8 },
+    },
+    wrapperCol: {
+        xs: { span: 14 },
+        sm: { span: 8 },
+    },
+};
+export const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0,
+        },
+        sm: {
+            span: 16,
+            offset: 8,
+        },
+    },
+};

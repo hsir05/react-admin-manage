@@ -4,11 +4,13 @@ import Users from '../page/users/users.jsx'
 import Units from '../page/units/units.jsx'
 import Roles from '../page/roles/roles.jsx'
 import Menus from '../page/menus/menus.jsx'
+import Types from '../page/types/types.jsx'
 
 import UnitAddEdit from '../page/units/addEdit.jsx'
 import UserAddEdit from '../page/users/addEdit.jsx'
 import RoleAddEdit from '../page/roles/addEdit.jsx'
 import MenuAddEdit from '../page/menus/addEdit.jsx'
+import TypeAddEdit from '../page/types/addEdit.jsx'
 
 // 定义路由不允许有相同的出现 如 /home/home
 const routes = [
@@ -71,6 +73,18 @@ const routes = [
         auth: true,
         path: '/menuAddEdit',
         component: MenuAddEdit
+    },
+    {
+        name: '空间类型管理',
+        auth: true,
+        path: '/typesManager',
+        component: Types
+    },
+    {
+        name: '编辑类型',
+        auth: true,
+        path: '/typeAddEdit',
+        component: TypeAddEdit
     },
 ]
 export default routes

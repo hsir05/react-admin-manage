@@ -24,6 +24,13 @@ export default {
                 { key: '445', url: '/menuAddEdit', hidden: true, icon: 'appstore', menu: '编辑菜单', children: [] },
             ]
         },
+        {
+            key: '77', icon: 'apartment', menu: '配置管理',
+            children: [
+                { key: '512', url: '/typesManager', icon: 'apartment', menu: '空间类型配置', children: [] },
+                { key: '513', url: '/typeAddEdit', icon: 'apartment', menu: '编辑空间类型', hidden: true, children: [] }
+            ]
+        },
         { key: 'sub2', icon: 'setting', menu: '系统管理',
             children: [
                 { key: '51', url: '/setting', icon: 'appstore', menu: '主题设置', children: [] }

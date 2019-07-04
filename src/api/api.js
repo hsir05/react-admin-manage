@@ -97,6 +97,72 @@ class API extends Server{
             throw err
         }
     }
+    async getMenusList (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/rolePerm/listPageAllPerm', params)
+            if (result && result.code === 200) {
+                return result
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+    async addMenu (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/rolePerm/addPerm', params)
+            if (result && result.code === 200) {
+                return result
+            } else {
+                throw result
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+    async getMenusTree (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/rolePerm/treePerm', params)
+            if (result && result.code === 200) {
+                return result
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+    async getTypesList (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/space/category/listPageAll', params)
+            if (result && result.code === 200) {
+                return result
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+    async addType (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/space/category/add', params)
+            if (result && result.code === 200) {
+                return result
+            } else {
+                throw result
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+    async delType (params = {}) {
+        try {
+            let result = await this.axios('post', '/admin/space/category/deleteById', params)
+            if (result && result.code === 200) {
+                return result
+            } else {
+                throw result
+            }
+        } catch (err) {
+            throw err
+        }
+    }
   async login(params = {}){
     try{
       let result = await this.axios('post', '/admin/login', params)

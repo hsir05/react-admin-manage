@@ -3,15 +3,16 @@ import { Table, Button, Popconfirm, Pagination } from 'antd'
 import { Link } from 'react-router-dom'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import Search from '../../components/search/search.jsx'
+import { getCategory} from '../../util/util.js'
 import API from '../../api/api'
 
-class Menus extends React.Component {
+class Types extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             data: {
-                list: [{ url: '/', menuName: '首页', icon: '' }, { url: '', menuName: '权限管理', icon: '' }, { url: '', menuName: '菜单管理', icon: '' }],
-                btn: { addUrl: '/menuAddEdit', btnName: '添加', icon: 'plus' }
+                list: [{ url: '/', menuName: '首页', icon: '' }, { url: '', menuName: '配置管理', icon: '' }, { url: '', menuName: '空间类型管理', icon: '' }],
+                btn: { addUrl: '/typeAddEdit', btnName: '添加', icon: 'plus' }
             },
             list: [],
             loading: false,
@@ -19,10 +20,9 @@ class Menus extends React.Component {
             page: 0,
             size: 10, 
             columns: [
-                { title: 'code', dataIndex: 'code' },
-                { title: 'icon', dataIndex: 'iconClass' },
-                { title: '菜单名称', dataIndex: 'name' },
-                { title: '状态', dataIndex: 'status' },
+                { title: 'ID', dataIndex: 'id' },
+                { title: '名称', dataIndex: 'name' },
+                { title: '类型', dataIndex: 'category', render: category => <span>{getCategory(category)}</span> },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
                         <p>
@@ -45,7 +45,7 @@ class Menus extends React.Component {
     getDate = async (option) => {
         this.setState({ loading: true })
         try {
-            let result = await API.getMenusList(option)
+            let result = await API.getTypesList(option)
             this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0) })
         } catch (err) {
             console.log(err)
@@ -88,4 +88,4 @@ class Menus extends React.Component {
     }
 }
 
-export default Menus;
+export default Types;
