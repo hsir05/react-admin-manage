@@ -1,19 +1,17 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import API from '../../api/api'
-import { Form, Input, Button, message, Select, Radio, DatePicker } from 'antd';
+import { Form, Input, Button, message, Radio, DatePicker } from 'antd';
 import moment from 'moment';
-import { validateForm, typeList, formItemLayout, tailFormItemLayout} from '../../util/util.js'
+import { validateForm, formItemLayout, tailFormItemLayout} from '../../util/util.js'
 
 const dateFormat = 'YYYY/MM/DD';
-const { Option } = Select;
 
 class AddEdit extends React.Component {
     state = {
         confirmDirty: false,
         loading: false,
         autoCompleteResult: [],
-        unitList: [],
         data: {
             list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/unitManager', menuName: '单位管理', icon: 'appstore' }, { url: null, menuName: '编辑单位', icon: '' }],
             btn: { addUrl: '/usersManager', btnName: '返回', icon: 'left' }
@@ -73,7 +71,6 @@ class AddEdit extends React.Component {
 
     render () {
         const { getFieldDecorator } = this.props.form;
-        const { unitList } = this.state
 
         return (
             <section>

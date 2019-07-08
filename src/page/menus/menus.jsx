@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import Search from '../../components/search/search.jsx'
 import API from '../../api/api'
+import { postRequestParam } from '../../api/http.js'
+
 
 class Menus extends React.Component {
     constructor(props) {
@@ -44,12 +46,19 @@ class Menus extends React.Component {
     }
     getDate = async (option) => {
         this.setState({ loading: true })
-        try {
-            let result = await API.getMenusList(option)
-            this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0) })
-        } catch (err) {
+        postRequestParam('/admin/rolePerm/listPageAllPerm', option)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
             console.log(err)
-        }
+        })
+        // try {
+        //     let result = await API.getMenusList(option)
+        //     this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0) })
+        // } catch (err) {
+        //     console.log(err)
+        // }
     }
     handlePage (page) {
         let option = {
@@ -87,5 +96,4 @@ class Menus extends React.Component {
         )
     }
 }
-
 export default Menus;

@@ -23,7 +23,7 @@ class Roles extends React.Component {
                 { title: 'ID', dataIndex: 'id' },
                 { title: 'code', dataIndex: 'code' },
                 { title: '名称', dataIndex: 'name' },
-                { title: '状态', dataIndex: 'status' },
+                { title: '描述', dataIndex: 'description' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
                         <p>

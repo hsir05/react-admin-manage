@@ -1,10 +1,10 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import API from '../../api/api'
-import { Form, Input, Select, Button, message } from 'antd';
-import { validateForm, formItemLayout, tailFormItemLayout} from '../../util/util.js'
+import { Form, Input, Button, message, Select } from 'antd';
+import { validateForm, formItemLayout, tailFormItemLayout, typeList} from '../../util/util.js'
 const { TextArea } = Input;
-const { Option } = Select;
+const { Option } = Select
 
 class AddEdit extends React.Component {
     state = {
@@ -57,12 +57,15 @@ class AddEdit extends React.Component {
                     </Form.Item>
 
                     <Form.Item label="图标" >
-                        {getFieldDecorator('iconClass')(<Input maxLength={20}/>)}
+                        {getFieldDecorator('icon')(<Input maxLength={20}/>)}
                     </Form.Item>
-                    {/* <Form.Item label="父组件" >
-                        {getFieldDecorator('unitType', {
-                            rules: validateForm.unitType
-                        })(<Select style={{ width: 200 }} placeholder="请选择类型">
+                    <Form.Item label="跳转路径" >
+                        {getFieldDecorator('uri')(<Input  />)}
+                    </Form.Item>
+                    <Form.Item label="父组件" >
+                        {getFieldDecorator('pid', {
+                            rules: validateForm.pid
+                        })(<Select style={{ width: 200 }} placeholder="请选择父组件">
                             {
                                 typeList.map(item => {
                                     return (
@@ -71,7 +74,7 @@ class AddEdit extends React.Component {
                                 })
                             }
                         </Select>)}
-                    </Form.Item> */}
+                    </Form.Item>
 
                     <Form.Item label="备注">
                         {getFieldDecorator('introduction')(<TextArea rows={4} maxLength={100}/>)}

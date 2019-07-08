@@ -9,7 +9,7 @@ const FormItem = Form.Item;
 
 class WrappedLoginApp extends React.Component {
   state = {
-    isAuth: true,
+    isAuth: false,
     form: {
         userName: '',
         password: '',
@@ -53,25 +53,54 @@ class WrappedLoginApp extends React.Component {
         this.setState({isAuth: !this.state.isAuth})
     }
 
+    wechatHandleClick (thirdpart) {
+        // this.$store.commit('SET_AUTH_TYPE', thirdpart)
+        // const appid = 'xxxxx'
+        // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
+        // const url = 'https://open.weixin.qq.com/connect/qrconnect?appid=' + appid + '&redirect_uri=' + redirect_uri + '&response_type=code&scope=snsapi_login#wechat_redirect'
+        // openWindow(url, thirdpart, 540, 540)
+    }
+    tencentHandleClick (thirdpart) {
+        // this.$store.commit('SET_AUTH_TYPE', thirdpart)
+        // const client_id = 'xxxxx'
+        // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
+        // const url = 'https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri
+        // openWindow(url, thirdpart, 540, 540)
+    }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isAuth } = this.state
     let formItem = null
     if (!isAuth) {
         formItem = (
-            <FormItem style={{ marginBottom: '6px' }}>
-                {getFieldDecorator('password', {
-                    rules: validateForm.password
-                })(
-                    <Input.Password prefix={< Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} maxLength={11} placeholder="Password" />
-                )}
-            </FormItem>
+            <div>
+                <FormItem style={{ marginBottom: '6px' }}>
+                    {getFieldDecorator('password', {
+                        rules: validateForm.password
+                    })(
+                        <Input.Password prefix={< Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} maxLength={11} placeholder="Password" />
+                    )}
+                </FormItem>
+                <Form.Item style={{ marginBottom: '6px' }}>
+                    <Row gutter={8}>
+                        <Col span={14}>
+                            {getFieldDecorator('captcha', {
+                                rules: validateForm.captcha
+                            })(<Input prefix={< Icon type="compass" style={{ color: 'rgba(0,0,0,.25)' }} />} maxLength={6} placeholder="captcha" />)}
+                        </Col>
+                        <Col span={6}>
+                            <span><img src="" alt="" /></span>
+                        </Col>
+                    </Row>
+                </Form.Item>
+            </div>
         ) 
     }else {
         formItem = (
             <Form.Item style={{ marginBottom: '6px' }}>
                 <Row gutter={8}>
-                    <Col span={15}>
+                    <Col span={14}>
                         {getFieldDecorator('captcha', {
                             rules: validateForm.captcha
                         })(<Input prefix={< Icon type="compass" style={{ color: 'rgba(0,0,0,.25)' }} />} maxLength={6} placeholder="captcha" />)}
@@ -88,7 +117,7 @@ class WrappedLoginApp extends React.Component {
           <div className="login-wrap">
               <h3 className="login-title mb15">后台管理系统</h3>
             <Form onSubmit={this.handleSubmit} className="login-form">
-                    <FormItem style={{ marginBottom: '6px' }}>
+                <FormItem style={{ marginBottom: '6px' }}>
                 {getFieldDecorator('phone', { rules: validateForm.phone
                 })(
                     <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} maxLength={11} placeholder="Phone" />
@@ -101,14 +130,14 @@ class WrappedLoginApp extends React.Component {
                     <FormItem style={{ marginBottom: '0' }}>  <Link className="login-form-forgot" to="">忘记密码</Link></FormItem>
             </div>
                 <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
-                登录
+                    登录
                 </Button>
             </Form>
-                <h3 className="login-auth mt15" onClick={this.handleIsAuth.bind(this)}>免密登陆</h3>
-                <Divider className="mt15 mb15" />
+            <h3 className="login-auth mt15" onClick={this.handleIsAuth.bind(this)}>免密登陆</h3>
+            <Divider className="mt15 mb15" />
             <h3 className="login-auth">第三方登陆</h3>
             <div className="auth-wrap mt15">
-                    <span className="auth-type" style={{marginRight: '10px'}}>
+                    <span className="auth-type" style={{ marginRight: '10px' }} onClick={this.wechatHandleClick}>
                         <img src={require('../../assets/weixin.png')}width="100%" height="100%" alt="" />
                     </span>
                     <span className="auth-type" style={{ marginLeft: '10px' }}>

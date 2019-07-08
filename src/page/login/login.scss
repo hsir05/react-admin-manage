@@ -10,12 +10,14 @@
     .login-title{
         text-align: center;
         color: $fontColor3;
+        font-size:$fontSize + 8px;
     }
     .auth-wrap {
         text-align: center;
+        user-select: none;
     }
     .login-wrap{
-        width: 350px;
+        width: 330px;
         margin:0 auto 0 auto;
         border: 1px solid $borderColor;
         border-radius: 5px;
@@ -30,7 +32,7 @@
     }
     .login-auth{
          text-align: center;
-         font-size: 14px;
+         font-size: $fontSize + 2px;
          font-weight: 400;
          color: $fontColor4;
          cursor: pointer;
@@ -41,4 +43,11 @@
         text-align: center;
         user-select: none;
     }
+
+    //  @media only screen and (max-width: 470px) {
+    //     .login .login-wrap{
+    //         border: 0;
+    //         background: transparent;
+    //     }
+    // }
 }
