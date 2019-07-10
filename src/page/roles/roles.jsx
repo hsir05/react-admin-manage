@@ -3,7 +3,7 @@ import { Table, Button, Popconfirm, Pagination } from 'antd'
 import { Link } from 'react-router-dom'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import Search from '../../components/search/search.jsx'
-import API from '../../api/api'
+import { getRolesList } from '../../api/roles'
 import './roles.scss'
 
 class Roles extends React.Component {
@@ -11,19 +11,18 @@ class Roles extends React.Component {
         super(props)
         this.state = {
             data: {
-                list: [{ url: '/', menuName: '首页', icon: '' }, { url: '', menuName: '角色管理', icon: '' },  { url: '', menuName: '角色授权', icon: '' }],
+                list: [{ url: '/', menuName: '首页', icon: '' }, { url: '', menuName: '角色管理', icon: '' }],
                 btn: { addUrl: '/roleAddEdit', btnName: '添加', icon: 'plus' }
             },
             list: [],
             loading: false,
             total: 0,
-            page: 0,
-            size: 10,
+            pageSize: 1,
+            pageNum: 10, 
             columns: [
                 { title: 'ID', dataIndex: 'id' },
-                { title: 'code', dataIndex: 'code' },
                 { title: '名称', dataIndex: 'name' },
-                { title: '描述', dataIndex: 'description' },
+                { title: '排序', dataIndex: 'sort' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
                         <p>
@@ -38,16 +37,16 @@ class Roles extends React.Component {
     }
     componentDidMount () {
         let option = {
-            page: this.state.page,
-            size: this.state.size
+            pageSize: this.state.pageSize,
+            pageNum: this.state.pageNum,
         }
-        this.getDate(option)
+        this.getData(option)
     }
-    getDate = async (option) => {
+    getData = async (option) => {
         this.setState({ loading: true })
         try {
-            let result = await API.getRolesList(option)
-            this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0) })
+            let res = await getRolesList(option)
+            this.setState({ list: res.data, loading: false, total: res.data.total })
         } catch (err) {
             console.log(err)
         }

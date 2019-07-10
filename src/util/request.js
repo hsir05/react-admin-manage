@@ -1,13 +1,29 @@
 import axios from "axios";
-// import { Component } from "react";
 import { baseURL } from '../envconfig/envconfig';
-// import { message } from 'antd';
-import { getSessionToken, removeSession } from '../util/util.js'
+import { removeSession } from '../util/util.js'
+import { message } from "antd";
 
+
+function interceptors (url) {
+    let val = null
+    switch (url) {
+        case "/authentication/form":
+            val = 'Basic c3Rvcm10b3kwOnN0b3JtdG95c2VjcmV0MA=='
+            break;
+        case "/code/image":
+            val = null
+            break;  
+        default :
+            val = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : null
+            break;
+    }
+    return val
+}
 // 请求前拦截
 axios.interceptors.request.use(
     config => {
-        config.headers['user_token'] = getSessionToken() 
+        config.headers['deviceId'] = 123456
+        config.headers['Authorization'] = interceptors(config.url)
         return config;
     },
     err => {
@@ -22,6 +38,7 @@ axios.interceptors.response.use(
         return data;
     },
     err => {
+        message.error(err.response.data.message)
         if (err.response.status === 504 || err.response.status === 404) {
             console.log("服务器被吃了⊙﹏⊙∥");
         } else if (err.response.status === 401) {
@@ -36,20 +53,21 @@ axios.interceptors.response.use(
 
 // @RequestBody请求
 export const postRequestBody = (url, params) => {
-    var searchParams = new URLSearchParams()
-    for (let key in params) {
-        searchParams.set(key, params[key])
-    }
+    // var searchParams = new URLSearchParams()
+    // for (let key in params) {
+    //     searchParams.set(key, params[key])
+    // }
     return axios({
         method: "post",
         url: `${baseURL}${url}`,
-        data: searchParams,
+        data: JSON.stringify(params),
         headers: {
             "Content-Type": "application/json",
             charset: "utf-8"
         }
     });
 };
+
 
 // @RequsetParam请求
 export const postRequestParam = (url, params) => {
@@ -73,10 +91,12 @@ export const postRequestParam = (url, params) => {
     });
 };
 
-export const get = url => {
+export const get = (url, params, config={}) => {
     return axios({
         method: "get",
-        url: `${baseURL}${url}`
+        url: `${baseURL}${url}`,
+        params,
+        ...config
     });
 };
 
@@ -84,8 +104,3 @@ export const multiple = function (requsetArray, callback) {
     axios.all(requsetArray).then(axios.spread(callback));
 };
 
-
-// Component.prototype.get = get;
-// Component.prototype.postRequestBody = postRequestBody;
-// Component.prototype.postRequestParam = postRequestParam;
-// Component.prototype.multiple = multiple;

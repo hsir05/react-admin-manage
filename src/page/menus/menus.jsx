@@ -3,9 +3,7 @@ import { Table, Button, Popconfirm, Pagination } from 'antd'
 import { Link } from 'react-router-dom'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import Search from '../../components/search/search.jsx'
-import API from '../../api/api'
-import { postRequestParam } from '../../api/http.js'
-
+import { getMenusList } from '../../api/menus'
 
 class Menus extends React.Component {
     constructor(props) {
@@ -18,12 +16,13 @@ class Menus extends React.Component {
             list: [],
             loading: false,
             total: 0,
-            page: 0,
-            size: 10, 
+            pageSize: 1,
+            pageNum: 10, 
             columns: [
-                { title: 'code', dataIndex: 'code' },
                 { title: 'icon', dataIndex: 'iconClass' },
                 { title: '菜单名称', dataIndex: 'name' },
+                { title: '路径', dataIndex: 'uri' },
+                { title: '排序', dataIndex: 'sort' },
                 { title: '状态', dataIndex: 'status' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
@@ -39,26 +38,19 @@ class Menus extends React.Component {
     }
     componentDidMount () {
         let option = {
-            page: this.state.page,
-            size: this.state.size
+            pageSize: this.state.pageSize,
+            pageNum: this.state.pageNum,
         }
         this.getDate(option)
     }
     getDate = async (option) => {
         this.setState({ loading: true })
-        postRequestParam('/admin/rolePerm/listPageAllPerm', option)
-        .then(res => {
-            console.log(res.data)
-        })
-        .catch(err => {
+        try {
+            let res = await getMenusList(option)
+            this.setState({ list: res.data, loading: false, total: res.data.total })
+        } catch (err) {
             console.log(err)
-        })
-        // try {
-        //     let result = await API.getMenusList(option)
-        //     this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0) })
-        // } catch (err) {
-        //     console.log(err)
-        // }
+        }
     }
     handlePage (page) {
         let option = {

@@ -1,6 +1,5 @@
 import Server from './server';
 
-
 class API extends Server{
   /**
    *  用途：上传图片
@@ -31,7 +30,7 @@ class API extends Server{
   async getUnitList(params = {}){
     try{
         let result = await this.axios('post', '/admin/unit/listPageUnit', params)
-      if(result && result.code === 200){
+      if(result && result.code === 0){
         return result
       } 
     }catch(err){
@@ -42,7 +41,7 @@ class API extends Server{
   async addUnit(params = {}){
     try{
         let result = await this.axios('post', '/admin/unit/addUnit', params)
-        if (result && result.code === 200) {
+        if (result && result.code === 0) {
         return result
       }else{
         throw result
@@ -54,7 +53,7 @@ class API extends Server{
   
     async getUsersList (params = {}) {
         try {
-            let result = await this.axios('post', '/admin/user/listPageAllAdmin', params)
+            let result = await this.axios('get', '/admin/list', params)
             if (result && result.code === 200) {
                 return result
             }
@@ -64,7 +63,7 @@ class API extends Server{
     }
     async addUser (params = {}) {
         try {
-            let result = await this.axios('post', '/admin/user/addUnitAdmin', params)
+            let result = await this.axios('post', '/admin/regiter', params)
             if (result && result.code === 200) {
                 return result
             } else {
@@ -77,7 +76,7 @@ class API extends Server{
     
    async getRolesList (params = {}) {
         try {
-            let result = await this.axios('post', '/admin/rolePerm/listPageAllRole', params)
+            let result = await this.axios('get', '/role/list', params)
             if (result && result.code === 200) {
                 return result
             }
@@ -87,8 +86,20 @@ class API extends Server{
     }
     async addRoles (params = {}) {
         try {
-            let result = await this.axios('post', '/admin/rolePerm/addRole', params)
-            if (result && result.code === 200) {
+            let result = await this.axios('post', '/role/create', params)
+            if (result && result.code === 0) {
+                return result
+            } else {
+                throw result
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+    async delRoles (params = {}) {
+        try {
+            let result = await this.axios('post', '/role/delete', params)
+            if (result && result.code === 0) {
                 return result
             } else {
                 throw result
@@ -99,7 +110,7 @@ class API extends Server{
     }
     async getMenusList (params = {}) {
         try {
-            let result = await this.axios('post', '/admin/rolePerm/listPageAllPerm', params)
+            let result = await this.axios('get', '/permission/list', params)
             if (result && result.code === 200) {
                 return result
             }
@@ -109,7 +120,7 @@ class API extends Server{
     }
     async addMenu (params = {}) {
         try {
-            let result = await this.axios('post', '/admin/rolePerm/addPerm', params)
+            let result = await this.axios('post', '/permission/create', params)
             if (result && result.code === 200) {
                 return result
             } else {
@@ -122,7 +133,7 @@ class API extends Server{
     async getMenusTree (params = {}) {
         try {
             let result = await this.axios('post', '/admin/rolePerm/treePerm', params)
-            if (result && result.code === 200) {
+            if (result && result.code === 0) {
                 return result
             }
         } catch (err) {
@@ -132,7 +143,7 @@ class API extends Server{
     async getTypesList (params = {}) {
         try {
             let result = await this.axios('post', '/admin/space/category/listPageAll', params)
-            if (result && result.code === 200) {
+            if (result && result.code === 0) {
                 return result
             }
         } catch (err) {
@@ -142,7 +153,7 @@ class API extends Server{
     async addType (params = {}) {
         try {
             let result = await this.axios('post', '/admin/space/category/add', params)
-            if (result && result.code === 200) {
+            if (result && result.code === 0) {
                 return result
             } else {
                 throw result
@@ -154,7 +165,7 @@ class API extends Server{
     async delType (params = {}) {
         try {
             let result = await this.axios('post', '/admin/space/category/deleteById', params)
-            if (result && result.code === 200) {
+            if (result && result.code === 0) {
                 return result
             } else {
                 throw result
@@ -163,10 +174,20 @@ class API extends Server{
             throw err
         }
     }
+
+    async captcha (params = {}) {
+        try {
+            let res = await this.axios('get', '/code/image', params)
+            return 'data:image/png;base64,' + btoa(new Uint8Array(res).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+        } catch (err) {
+            throw err
+        }
+    }
+
   async login(params = {}){
     try{
-      let result = await this.axios('post', '/admin/login', params)
-      if(result && result.code === 200){
+        let result = await this.axios('post', '/authentication/form', params)
+      if(result && result.code === 0){
         return result
       }else{
         throw result

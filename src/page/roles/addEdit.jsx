@@ -46,7 +46,6 @@ const treeData = [
 class AddEdit extends React.Component {
     state = {
         loading: false,
-        list: [],
         data: {
             list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/unitManager', menuName: '单位管理', icon: 'appstore' }, { url: null, menuName: '添加单位', icon: '' }],
             btn: { addUrl: '/rolesManager', btnName: '返回', icon: 'left' }
@@ -93,8 +92,6 @@ class AddEdit extends React.Component {
 
     render () {
         const { getFieldDecorator } = this.props.form;
-        const {list} = this.state
-
         return (
             <section>
                 <BreadCrumb   {...this.state.data} />
@@ -104,6 +101,10 @@ class AddEdit extends React.Component {
                     </Form.Item>
                     <Form.Item label="角色code">
                         {getFieldDecorator('adminCount', { rules: validateForm.adminCount })(<Input maxLength={130}placeholder="请输入角色code"/>)}
+                    </Form.Item>
+
+                    <Form.Item label="排序">
+                        {getFieldDecorator('sort', { rules: validateForm.sort })(<Input maxLength={130} placeholder="请输入角色code" />)}
                     </Form.Item>
 
                     <Form.Item label="角色描述">

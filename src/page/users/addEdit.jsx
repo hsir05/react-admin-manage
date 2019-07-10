@@ -1,11 +1,11 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-import API from '../../api/api'
-import { Form, Input, Button, message, Radio, DatePicker } from 'antd';
+import { addUser } from '../../api/users'
+import { Form, Input, Button, message, Select } from 'antd';
 import moment from 'moment';
 import { validateForm, formItemLayout, tailFormItemLayout} from '../../util/util.js'
-
-const dateFormat = 'YYYY/MM/DD';
+const { Option } = Select;
+const { TextArea } = Input;
 
 class AddEdit extends React.Component {
     state = {
@@ -18,27 +18,15 @@ class AddEdit extends React.Component {
         },
     };
 
-    componentWillMount () {
-        let option = { page: 0, size: 10000}
-        this.getAllUnitData(option)
-    }
+    componentWillMount () {}
 
-    getAllUnitData = async (values) => {
-        this.setState({ loading: true })
-        try {
-            let result = await API.getUnitList(values)
-            this.setState({ unitList: result.data.content, loading: false })
-        } catch (err) {
-            this.setState({ loading: false })
-            console.warn(err)
-        }
-    }
     addData = async (values) => {
         this.setState({ loading: true })
         try {
-            let result = await API.addUser(values)
-            result.code === 200 && message.success('保存成功')
-            this.setState({ loading: false, imageUrl: '' })
+            let res = await addUser(values)
+            console.log(res)
+            message.success('保存成功')
+            this.setState({ loading: false })
             this.props.form.resetFields();
         } catch (err) {
             this.setState({ loading: false })
@@ -50,18 +38,8 @@ class AddEdit extends React.Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                let val = moment(values.birthday).valueOf()
-                let option = {...values}
-                option.birthday = val
-                this.addData(option)
+                this.addData(values)
             }
-        });
-    }
-
-    onChange = (date, dateString) =>{
-        console.log( dateString);
-        this.props.form.setFieldsValue({
-            birthday: dateString,
         });
     }
 
@@ -71,40 +49,26 @@ class AddEdit extends React.Component {
 
     render () {
         const { getFieldDecorator } = this.props.form;
-
         return (
             <section>
                 <BreadCrumb   {...this.state.data} />
                 <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-                    <Form.Item label="账号">
-                        {getFieldDecorator('loginAccount', { rules: validateForm.loginAccount })(<Input maxLength={20}/>)}
+                    <Form.Item label="用户姓名">
+                        {getFieldDecorator('username', { rules: validateForm.username })(<Input maxLength={20}/>)}
                     </Form.Item>
+
                     <Form.Item label="昵称">
                         {getFieldDecorator('nickName', { rules: validateForm.nickName })(<Input maxLength={10}/>)}
                     </Form.Item>
 
-                    <Form.Item label="真实姓名" >
-                        {getFieldDecorator('realName', {
-                            rules: validateForm.realName
+                    <Form.Item label="密码" >
+                        {getFieldDecorator('password', {
+                            rules: validateForm.password
                         })(<Input maxLength={20}/>)}
                     </Form.Item>
 
-                    <Form.Item label="性别">
-                        {getFieldDecorator('gender', { rules: validateForm.gender })(
-                            <Radio.Group>
-                                <Radio value={0}>男</Radio>
-                                <Radio value={1}>女</Radio>
-                            </Radio.Group>)}
-                    </Form.Item>
-
-                    <Form.Item label="出生年月日">
-                        {getFieldDecorator('birthday', {rules: validateForm.birthday })(
-                            <DatePicker format={dateFormat} defaultPickerValue={moment('2002/12/31', dateFormat)} 
-                            onChange={this.onChange} disabledDate={this.disabledDate} />)}
-                    </Form.Item>
-
                     <Form.Item label="电话">
-                        {getFieldDecorator('phone', {
+                        {getFieldDecorator('mobile', {
                             rules: validateForm.phone
                         })(<Input maxLength={11}/>)}
                     </Form.Item>
@@ -112,33 +76,21 @@ class AddEdit extends React.Component {
                     <Form.Item label="邮箱">
                         {getFieldDecorator('email', { rules: validateForm.email })(<Input />)}
                     </Form.Item>
-                    {/* <Form.Item label="所属单位" >
-                        {getFieldDecorator('unitCode', {
-                            rules: validateForm.unitCode
-                        })(<Select style={{ width: 200 }} placeholder="请选择所属单位">
-                            {
-                                unitList.map((item, index) => {
-                                    return (
-                                        <Option key={index} value={item.code}> {item.name}</Option>
-                                    )
-                                })
-                            }
-                        </Select>)}
+
+                    <Form.Item label="用户角色">
+                        <Select defaultValue="lucy">
+                            <Option value="jack">Jack</Option>
+                            <Option value="lucy">Lucy</Option>
+                        </Select>
                     </Form.Item>
 
-                    <Form.Item label="单位类型" >
-                        {getFieldDecorator('unitType', {
-                            rules: validateForm.unitType
-                        })(<Select style={{ width: 200 }} placeholder="请选择类型">
-                            {
-                                typeList.map(item => {
-                                    return (
-                                        <Option key={item.id} value={item.type}> {item.name}</Option>
-                                    )
-                                })
-                            }
-                        </Select>)}
-                    </Form.Item> */}
+                    <Form.Item label="备注">
+                        {getFieldDecorator('note', { rules: validateForm.note })(
+                            <TextArea placeholder="备注"
+                                autosize={{ minRows: 2, maxRows: 6 }}
+                            />
+                            )}
+                    </Form.Item>
 
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">

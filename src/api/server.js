@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { baseURL} from '../envconfig/envconfig';
 import { message } from 'antd';
-import { getSessionToken, removeSession } from '../util/util.js'
-
+import { removeSession } from '../util/util.js'
+// getSessionToken, 
 /**
  * 主要params参数
  * @params method {string} 方法名
@@ -30,16 +30,18 @@ export default class Server {
         timeout: 30000,
         params: null,
         data: null,
-        headers: { user_token: getSessionToken(),},
-        withCredentials: false, //是否携带cookies发起请求
+        //   headers: { accessToken: getSessionToken(),},
+          headers: { Authorization: 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbImFsbCIsIndyaXRlIiwicmVhZCJdLCJjb21wYW55Ijoic3Rvcm10b3kiLCJleHAiOjE1NjI2OTA5MzAsImF1dGhvcml0aWVzIjpbInVtczphZG1pbjpkZWxldGUiLCJ1bXM6YWRtaW46Y3JlYXRlIiwic3lzIiwidW1zOmFkbWluOnVwZGF0ZSIsInVtczphZG1pbjpyZWFkIl0sImp0aSI6IjYyMjA3YWFmLTgwYzEtNGJmNS1hMDI0LTMxYTJiMmUwZGUzMiIsImNsaWVudF9pZCI6InN0b3JtdG95MCJ9.yg9GX6rd7jtQNJf5a0VKp5qkvwsKBzqql1lYErQsQqI', },
+        withCredentials: true, //是否携带cookies发起请求
         validateStatus:(status)=>{
             return status >= 200 && status < 300;
         }
       }
       if (method === 'get' || method === 'delete') {
         _option.params = params
+        _option['responseType'] = 'arraybuffer'
       } else {
-          var searchParams = new URLSearchParams()
+          let searchParams = new URLSearchParams()
           for (let key in params) {
               searchParams.set(key, params[key])
           }
@@ -53,7 +55,9 @@ export default class Server {
                   window.location.href = `http://${window.location.host}/login`
               }, 1500);
               reject()
-          } else {
+          } else if (res.config.url === '/code/image'){
+              resolve(res.data)
+          }else{
               resolve(typeof res === 'object' ? res.data : JSON.parse(res.data))
           }
       },

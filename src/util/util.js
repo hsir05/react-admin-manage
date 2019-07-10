@@ -1,4 +1,4 @@
-
+import React from 'react'
 /*分秒倒计时*/
 export function countTime() {
   let m = 0;  //分
@@ -106,8 +106,10 @@ export function removeSession () {
 }
 
 export const validateForm = {
+    username: [{ required: true, message: '请输入账号' }],
     password: [{ required: true, message: '请输入你的密码' }],
     captcha: [{ required: true, message: '请输入验证码' }],
+    imageCode: [{ required: true, message: '请输入图片验证码' }],
 
     name: [{ required: true, message: '请输入名称', }],
     en_name: [{ required: true, message: '请输入单位英文名称', }],
@@ -163,9 +165,21 @@ export const typeList = [
         name: '教育厅'
     },
 ]
+
 export function getUnitType (type) {
     let item = typeList.find(item => item.type === type)
     return item ? item.name : ''
+}
+
+export function itemRender(current, type, originalElement) {
+    if (type === 'prev') {
+        // eslint-disable-next-line
+        return <a>上一页</a>;
+    } if (type === 'next') {
+        // eslint-disable-next-line
+        return <a>下一页</a>;
+    }
+    return originalElement;
 }
 export const category = [
     {
@@ -189,6 +203,7 @@ export const category = [
         name: '企业类型',
     },
 ]
+
 export function getCategory (id) {
     let item = category.find(item => item.id === id)
     return item ? item.name : ''

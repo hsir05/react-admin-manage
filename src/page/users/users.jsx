@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Table, Button, Popconfirm, Pagination } from 'antd'
+import { Table, Button, Popconfirm, Pagination, message } from 'antd'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import Search from '../../components/search/search.jsx'
-import API from '../../api/api'
+import { getUsersList, delUser} from '../../api/users'
+import { itemRender } from '../../util/util.js'
 import './users.scss'
 
 class Users extends React.Component {
@@ -13,20 +14,17 @@ class Users extends React.Component {
             list: [],
             loading: false,
             total: 0,
-            page: 0,
-            size: 10, 
+            pageSize: 1,
+            pageNum: 10, 
             columns: [
-                { title: '账号', dataIndex: 'loginAccount' },
-                { title: '昵称', dataIndex: 'nickName' },
-                { title: '真实姓名', dataIndex: 'realName' },
-                { title: '电话', dataIndex: 'phone' },
-                { title: '邮箱', dataIndex: 'email' },
-                { title: '性别', dataIndex: 'gender', render: gender => <span>{gender === 1 ? '女' : '男'}</span>, },
-                { title: '出生日期', dataIndex: 'birthday' },
+                { title: 'ID', dataIndex: 'id' },
+                { title: '手机号码', dataIndex: 'mobile' },
+                { title: '用户名', dataIndex: 'username' },
+                { title: '状态', dataIndex: 'status' },
                 {
                     title: '操作', dataIndex: '', create_at: 'x', render: (record) =>
                         <p>
-                            <Popconfirm title="你确定要删除?" onConfirm={() => this.deleteSel(record._id)}>
+                            <Popconfirm title="你确定要删除?" onConfirm={() => this.deleteSel(record.id)}>
                                 <Button type="danger" style={{ marginRight: '5px' }}>删除</Button>
                             </Popconfirm>
                             <Button type="primary" ><Link to={`/edit/${record._id}`}>修改</Link></Button>
@@ -42,50 +40,33 @@ class Users extends React.Component {
 
     componentDidMount () {
         let option = {
-            page: this.state.page,
-            size: this.state.size
+            pageSize: this.state.pageSize,
+            pageNum: this.state.pageNum,
+            name: ''
         }
-        this.getDate(option)
+        this.getData(option)
     }
 
-    getDate = async (option) => {
-        this.setState({ loading: true })
-        try {
-            let result = await API.getUsersList(option)
-            this.setState({ list: result.data.content, loading: false, total: parseInt(result.data.totalElements, 0) })
-        } catch (err) {
-            console.log(err)
-        }
+    getData = async (option) => {
+        let res = await getUsersList(option)
+        this.setState({ list: res.data.list, loading: false, total: res.data.total })
     }
 
     deleteSel = async (id) => {
-        try {
-            let result = await API.delteArticle({ id: id })
-            console.log(result);
-            if (result.status === '0') {
-                this.getDate()
-            }
-        } catch (err) {
-            console.log(err)
+        let res = await delUser(id)
+        if (res.code === 200) {
+            let list = [...this.state.list]
+            let index = list.findIndex(item => item.id === id)
+            list.splice(index, 1)
+            this.setState({list: list})
+            message.success(res.message)
         }
     }
 
-    handlePage (page) {
-        console.log(page)
-        this.setState({ page: page }, () => {
+    handlePage (pageSize) {
+        this.setState({ pageSize: pageSize }, () => {
             this.getDate()
         })
-    }
-
-    itemRender (current, type, originalElement) {
-        if (type === 'prev') {
-            // eslint-disable-next-line
-            return <a>上一页</a>;
-        } if (type === 'next') {
-        // eslint-disable-next-line
-            return <a>下一页</a>;
-        }
-        return originalElement;
     }
 
     render () {
@@ -98,7 +79,7 @@ class Users extends React.Component {
                     <div className="table-wrap">
                         <Table bordered loading={this.state.loading} pagination={false} columns={this.state.columns} rowKey={'id'} dataSource={this.state.list} />
                     </div>
-                    <Pagination onChange={this.handlePage.bind(this)} total={this.state.total} itemRender={this.itemRender.bind(this)} />
+                    <Pagination onChange={this.handlePage.bind(this)} total={this.state.total} itemRender={itemRender.bind(this)} />
                 </div>
             </section>
         )

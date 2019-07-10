@@ -9,10 +9,10 @@ const mapDispatchToProps = dispatch => ({ ...dispatch })
 class RouteComp extends React.Component {
     componentWillMount () {
         let { history: { replace } } = this.props
-        let user = this.props.userInfo
-        if (JSON.stringify(user) === '{}') {
-            replace({ pathname: `/login`, search: window.location.href })
-        }
+        // let user = this.props.userInfo
+        // if (JSON.stringify(user) === '{}') {
+        //     replace({ pathname: `/login`, search: window.location.href })
+        // }
         let currentPath = this.props.path
         
         !menuIsRoutes(currentPath, this.props.menu) && replace({ pathname: `/404` })

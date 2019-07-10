@@ -43,6 +43,18 @@
         text-align: center;
         user-select: none;
     }
+    .captcha-wrap{
+        display: inline-block;
+        width: 100px;
+        height: 28px;
+        border-radius: 2px;
+        overflow: hidden;
+        vertical-align: middle;
+        cursor: pointer;
+        img{
+            vertical-align: baseline;
+        }
+    }
 
     //  @media only screen and (max-width: 470px) {
     //     .login .login-wrap{

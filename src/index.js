@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './style/index.scss';
 import App from './routes/index';
 import less from 'less';
-import "./api/http.js";
 
 
 const changeTheme = (val) => { // 改变主题样式
