@@ -24,6 +24,9 @@ axios.interceptors.request.use(
     config => {
         config.headers['deviceId'] = 123456
         config.headers['Authorization'] = interceptors(config.url)
+        if(config.url === '/code/image') {
+            config.responseType = 'arraybuffer'
+        }
         return config;
     },
     err => {

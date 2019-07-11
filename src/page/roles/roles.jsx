@@ -11,7 +11,7 @@ class Roles extends React.Component {
         super(props)
         this.state = {
             data: {
-                list: [{ url: '/', menuName: '首页', icon: '' }, { url: '', menuName: '角色管理', icon: '' }],
+                list: [{ url: '/', menuName: '首页', icon: '' }, { url: '', menuName: '权限管理', icon: '' }, { url: '', menuName: '角色管理', icon: '' }],
                 btn: { addUrl: '/roleAddEdit', btnName: '添加', icon: 'plus' }
             },
             list: [],

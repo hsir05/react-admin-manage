@@ -47,7 +47,7 @@ class AddEdit extends React.Component {
     state = {
         loading: false,
         data: {
-            list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/unitManager', menuName: '单位管理', icon: 'appstore' }, { url: null, menuName: '添加单位', icon: '' }],
+            list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/unitManager', menuName: '角色管理', icon: 'appstore' }, { url: null, menuName: '编辑角色', icon: '' }],
             btn: { addUrl: '/rolesManager', btnName: '返回', icon: 'left' }
         }, 
     };

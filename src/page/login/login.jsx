@@ -21,12 +21,11 @@ class WrappedLoginApp extends React.Component {
 }
 
   componentDidMount () {
-      let option = { responseType: 'arraybuffer'}
-      this.getCaptcha(option)
+      this.getCaptcha()
   }
 
-  getCaptcha = async(option) => {
-      let res = await captcha(option)
+  getCaptcha = async() => {
+      let res = await captcha()
       this.setState({ captcha: res })
   }
 
@@ -69,6 +68,7 @@ class WrappedLoginApp extends React.Component {
     wechatHandleClick (thirdpart) {
         // this.$store.commit('SET_AUTH_TYPE', thirdpart)
         const appid = 'wx1b4c7610fc671845'
+        // eslint-disable-next-line
         const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + 'https://www.baidu.com')
         const url = 'https://open.weixin.qq.com/connect/qrconnect?appid=' + appid + '&redirect_uri=' + redirect_uri + '&response_type=code&scope=snsapi_login#wechat_redirect'
         // window.open(url, thirdpart, 540, 540)

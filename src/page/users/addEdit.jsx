@@ -13,7 +13,7 @@ class AddEdit extends React.Component {
         loading: false,
         autoCompleteResult: [],
         data: {
-            list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/unitManager', menuName: '单位管理', icon: 'appstore' }, { url: null, menuName: '编辑单位', icon: '' }],
+            list: [{ url: '/', menuName: '首页', icon: 'appstore' }, { url: '/usersManager', menuName: '用户管理', icon: 'appstore' }, { url: null, menuName: '编辑用户', icon: '' }],
             btn: { addUrl: '/usersManager', btnName: '返回', icon: 'left' }
         },
     };
@@ -54,39 +54,52 @@ class AddEdit extends React.Component {
                 <BreadCrumb   {...this.state.data} />
                 <Form {...formItemLayout} onSubmit={this.handleSubmit}>
                     <Form.Item label="用户姓名">
-                        {getFieldDecorator('username', { rules: validateForm.username })(<Input maxLength={20}/>)}
+                        {getFieldDecorator('username', { rules: validateForm.username })(
+                        <Input maxLength={20} placeholder="请输入用户姓名"/>)}
                     </Form.Item>
 
                     <Form.Item label="昵称">
-                        {getFieldDecorator('nickName', { rules: validateForm.nickName })(<Input maxLength={10}/>)}
+                        {getFieldDecorator('nickName', { rules: validateForm.nickName })(
+                        <Input maxLength={10} placeholder="请输入昵称"/>)}
                     </Form.Item>
 
                     <Form.Item label="密码" >
                         {getFieldDecorator('password', {
                             rules: validateForm.password
-                        })(<Input maxLength={20}/>)}
+                        })(<Input maxLength={20} placeholder="请输入密码"/>)}
                     </Form.Item>
 
                     <Form.Item label="电话">
                         {getFieldDecorator('mobile', {
                             rules: validateForm.phone
-                        })(<Input maxLength={11}/>)}
+                        })(<Input maxLength={11} placeholder="请输入电话号码"/>)}
                     </Form.Item>
                     
                     <Form.Item label="邮箱">
-                        {getFieldDecorator('email', { rules: validateForm.email })(<Input />)}
+                        {getFieldDecorator('email', { rules: validateForm.email })(<Input placeholder="请输入邮箱账号"/>)}
                     </Form.Item>
 
                     <Form.Item label="用户角色">
-                        <Select defaultValue="lucy">
-                            <Option value="jack">Jack</Option>
-                            <Option value="lucy">Lucy</Option>
-                        </Select>
+                        {getFieldDecorator('email', { rules: validateForm.email })(
+                            <Select placeholder="请选择用户角色">
+                                <Option value="jack">Jack</Option>
+                                <Option value="lucy">Lucy</Option>
+                            </Select>
+                        )}
+                    </Form.Item>
+
+                    <Form.Item label="状态">
+                        {getFieldDecorator('status', { rules: validateForm.email })(
+                            <Select placeholder="请选择状态">
+                                <Option value={1}>显示</Option>
+                                <Option value={0}>隐藏</Option>
+                            </Select>
+                        )}
                     </Form.Item>
 
                     <Form.Item label="备注">
                         {getFieldDecorator('note', { rules: validateForm.note })(
-                            <TextArea placeholder="备注"
+                            <TextArea placeholder="请输入备注"
                                 autosize={{ minRows: 2, maxRows: 6 }}
                             />
                             )}

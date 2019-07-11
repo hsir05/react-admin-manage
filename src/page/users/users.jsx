@@ -27,12 +27,12 @@ class Users extends React.Component {
                             <Popconfirm title="你确定要删除?" onConfirm={() => this.deleteSel(record.id)}>
                                 <Button type="danger" style={{ marginRight: '5px' }}>删除</Button>
                             </Popconfirm>
-                            <Button type="primary" ><Link to={`/edit/${record._id}`}>修改</Link></Button>
+                            <Button type="primary" ><Link to={`/userAddEdit/${record.id}`}>编辑</Link></Button>
                         </p>
                 }
             ],
             data: {
-                list: [{ url: '/', menuName: '首页', icon: '' }, { url: null, menuName: '角色管理', icon: '' }, { url: null, menuName: '管理员管理', icon: '' }],
+                list: [{ url: '/', menuName: '首页', icon: '' }, { url: null, menuName: '权限管理', icon: '' }, { url: null, menuName: '用户管理', icon: '' }],
                 btn: { addUrl: '/userAddEdit', btnName: '添加', icon: 'plus' }
             }
         }
@@ -64,9 +64,22 @@ class Users extends React.Component {
     }
 
     handlePage (pageSize) {
-        this.setState({ pageSize: pageSize }, () => {
-            this.getDate()
-        })
+        this.setState({ pageSize: pageSize })
+        let option = {
+            pageSize: pageSize,
+            pageNum: this.state.pageNum,
+            name: ''
+        }
+        this.getData(option)
+    }
+
+    getSearch = val => {
+        let option = {
+            pageSize: 1,
+            pageNum: this.state.pageNum,
+            name: val.name
+        }
+        this.getData(option)
     }
 
     render () {
@@ -75,7 +88,7 @@ class Users extends React.Component {
             <section className="users">
                 <BreadCrumb   {...this.state.data} />
                 <div style={{ background: 'white', padding: '15px', paddingTop: '0' }}>
-                    <Search getDate={this.getDate} />
+                    <Search getSearch={this.getSearch} />
                     <div className="table-wrap">
                         <Table bordered loading={this.state.loading} pagination={false} columns={this.state.columns} rowKey={'id'} dataSource={this.state.list} />
                     </div>

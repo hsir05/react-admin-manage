@@ -1,16 +1,12 @@
 import Home from '../page/home/home.jsx'
 import Setting from '../page/setting/setting.jsx'
 import Users from '../page/users/users.jsx'
-import Units from '../page/units/units.jsx'
 import Roles from '../page/roles/roles.jsx'
 import Menus from '../page/menus/menus.jsx'
-import Types from '../page/types/types.jsx'
 
-import UnitAddEdit from '../page/units/addEdit.jsx'
 import UserAddEdit from '../page/users/addEdit.jsx'
 import RoleAddEdit from '../page/roles/addEdit.jsx'
 import MenuAddEdit from '../page/menus/addEdit.jsx'
-import TypeAddEdit from '../page/types/addEdit.jsx'
 
 // 定义路由不允许有相同的出现 如 /home/home
 const routes = [
@@ -27,28 +23,22 @@ const routes = [
         component: Setting
     },
     {
-        name: '管理员管理',
+        name: '用户管理',
         auth: true,
         path: '/usersManager',
         component: Users
     },
     {
-        name: '编辑管理员',
+        name: '编辑用户',
         auth: true,
         path: '/userAddEdit',
         component: UserAddEdit
     },
     {
-        name: '单位管理',
+        name: '编辑用户',
         auth: true,
-        path: '/unitsManager',
-        component: Units
-    },
-    {
-        name: '编辑单位',
-        auth: true,
-        path: '/unitAddEdit',
-        component: UnitAddEdit
+        path: '/userAddEdit/:id',
+        component: UserAddEdit
     },
     {
         name: '角色管理',
@@ -60,6 +50,12 @@ const routes = [
         name: '编辑角色',
         auth: true,
         path: '/roleAddEdit',
+        component: RoleAddEdit
+    },
+    {
+        name: '编辑角色',
+        auth: true,
+        path: '/roleAddEdit/:id',
         component: RoleAddEdit
     },
     {
@@ -75,16 +71,10 @@ const routes = [
         component: MenuAddEdit
     },
     {
-        name: '空间类型管理',
+        name: '编辑菜单',
         auth: true,
-        path: '/typesManager',
-        component: Types
-    },
-    {
-        name: '编辑类型',
-        auth: true,
-        path: '/typeAddEdit',
-        component: TypeAddEdit
+        path: '/menuAddEdit/:id',
+        component: MenuAddEdit
     },
 ]
 export default routes

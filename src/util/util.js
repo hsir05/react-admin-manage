@@ -1,4 +1,6 @@
 import React from 'react'
+import pathToRegexp from 'path-to-regexp'
+
 /*分秒倒计时*/
 export function countTime() {
   let m = 0;  //分
@@ -51,25 +53,75 @@ export function dateUtil (time, format = 'YYYY-MM-DD') {
  * 判断权限
  * @currentPath {String}当前将要跳转的菜单路径
  * @menu [list] 所有路由
+ * 
+ *     let re = pathToRegexp('/foo/:id')
+        let match1 = re.exec('/foo');
+        console.log(match1)
  *  */
 export function menuIsRoutes (currentPath, menu) {
     let isRedirect = false
     let keys = '0'
     for (let j = 0; j < menu.length; j++) {
         let item = menu[j]
-        if (item.children.length < 1 && item.url && item.url.indexOf(currentPath) !== -1) {
-            isRedirect = true
-            keys = item.key
-        }
-        for (let j = 0; j < item.children.length; j++) {
-            if (item.children[j].url.indexOf(currentPath) !== -1) {
+        if (item.children.length < 1 && item.url) {
+            let re = pathToRegexp(item.url)
+            let match = re.exec(currentPath);
+            if (match) {
                 isRedirect = true
-                keys = item.children[j].key
+                keys = item.key
+            }
+        } else {
+            for (let j = 0; j < item.children.length; j++) {
+                let re = pathToRegexp(item.children[j].url)
+                let match = re.exec(currentPath);
+                if (match) {
+                    isRedirect = true
+                    keys = item.children[j].key
+                }
             }
         }
     }
-    return { isRedirect, keys}
+    return { isRedirect, keys }
 }
+// export function menuIsRoutes (currentPath, menu) {
+//     let isRedirect = false
+//     let keys = '0'
+//     for (let j = 0; j < menu.length; j++) {
+//         let item = menu[j]
+//         if (item.children.length < 1 && item.url && item.url.indexOf(currentPath) !== -1) {
+//             isRedirect = true
+//             keys = item.key
+//         }
+//         for (let j = 0; j < item.children.length; j++) {
+//             if (item.children[j].url.indexOf(currentPath) !== -1) {
+//                 isRedirect = true
+//                 keys = item.children[j].key
+//             }
+//         }
+//     }
+//     return { isRedirect, keys}
+// }
+// 数组扁平化
+// let arr = [1, 2, [3, 4], [5, 6, [7, 8]]]
+export const flat = (arr) => {
+    let newarr = [];
+    arr.forEach((el, i) => {
+        if (Array.isArray(el)) {
+            newarr = newarr.concat(flat(el));
+        } else {
+            newarr.push(el)
+        }
+    });
+    return newarr;
+}
+
+// 数组扁平化2
+// let array = [1, 2, [3, 4], [5, 6, [7, 8]]]
+export const flat2 = (array) => {
+    return [...(array.toString().replace(/,/g, ''))]
+}
+// 数组扁平化2
+// Array.from(new Set(array.flat(Infinity))).sort((a, b) => { return a - b })
 
 /**
  * 判断数据类型
@@ -104,7 +156,9 @@ export function removeSession () {
     sessionStorage.removeItem('user')
     sessionStorage.removeItem('token')
 }
-
+/*
+*表单验证
+ */
 export const validateForm = {
     username: [{ required: true, message: '请输入账号' }],
     password: [{ required: true, message: '请输入你的密码' }],
@@ -170,7 +224,7 @@ export function getUnitType (type) {
     let item = typeList.find(item => item.type === type)
     return item ? item.name : ''
 }
-
+// 分页函数
 export function itemRender(current, type, originalElement) {
     if (type === 'prev') {
         // eslint-disable-next-line
