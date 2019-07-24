@@ -1,7 +1,6 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-import API from '../../api/api'
-import { Form, Input, Button, message, TreeSelect} from 'antd';
+import { Form, Input, Button, TreeSelect} from 'antd';
 import { validateForm, formItemLayout, tailFormItemLayout} from '../../util/util.js'
 const { TreeNode } = TreeSelect;
 const { TextArea } = Input;
@@ -75,10 +74,10 @@ class AddEdit extends React.Component {
     addData = async (values) => {
         this.setState({ loading: true })
         try {
-            let result = await API.addRoles(values)
-            result.code === 200 && message.success('保存成功')
-            this.setState({ loading: false, imageUrl: ''})
-            this.props.form.resetFields();
+            // let result = await API.addRoles(values)
+            // result.code === 200 && message.success('保存成功')
+            // this.setState({ loading: false, imageUrl: ''})
+            // this.props.form.resetFields();
         } catch (err) {
             this.setState({ loading: false })
             console.warn(err)

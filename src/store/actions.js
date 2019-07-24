@@ -37,3 +37,8 @@ export function seToken (data) {
         dispatch({ type: 'SET_TOKEN', data: data })
     }
 }
+export function setLoading (data) {
+    return (dispatch, getState) => {
+        dispatch({ type: 'SET_LOADING', data: data })
+    }
+}

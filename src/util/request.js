@@ -3,7 +3,6 @@ import { baseURL } from '../envconfig/envconfig';
 import { removeSession } from '../util/util.js'
 import { message } from "antd";
 
-
 function interceptors (url) {
     let val = null
     switch (url) {
@@ -37,11 +36,23 @@ axios.interceptors.request.use(
 
 // 返回后拦截
 axios.interceptors.response.use(
-    data => {
-        return data;
+    result => {
+        if (result.data && result.data.code === 401) {
+            message.error(result.data.message)
+            setTimeout(() => {
+                removeSession()
+                window.location.href = `http://${window.location.host}/login`
+            }, 1200);
+        } else {
+            return result;
+        }
     },
     err => {
-        message.error(err.response.data.message)
+        if (err.response.data.message) {
+            message.error(err.response.data.message)
+        } else {
+            message.error('请求失败，请稍后重试')
+        }
         if (err.response.status === 504 || err.response.status === 404) {
             console.log("服务器被吃了⊙﹏⊙∥");
         } else if (err.response.status === 401) {
@@ -50,6 +61,7 @@ axios.interceptors.response.use(
             console.log("服务器开小差了⊙﹏⊙∥");
         }
         removeSession()
+        // return err
         return Promise.reject(err);
     }
 );
@@ -70,7 +82,6 @@ export const postRequestBody = (url, params) => {
         }
     });
 };
-
 
 // @RequsetParam请求
 export const postRequestParam = (url, params) => {

@@ -27,7 +27,8 @@ class Users extends React.Component {
                             <Popconfirm title="你确定要删除?" onConfirm={() => this.deleteSel(record.id)}>
                                 <Button type="danger" style={{ marginRight: '5px' }}>删除</Button>
                             </Popconfirm>
-                            <Button type="primary" ><Link to={`/userAddEdit/${record.id}`}>编辑</Link></Button>
+                            <Button type="primary" style={{ marginRight: '5px' }}><Link to={`/userAddEdit/${record.id}`}>编辑</Link></Button>
+                            <Button type="primary" ><Link to={`/userAuth/${record.id}`}>授权</Link></Button>
                         </p>
                 }
             ],
@@ -48,8 +49,16 @@ class Users extends React.Component {
     }
 
     getData = async (option) => {
-        let res = await getUsersList(option)
-        this.setState({ list: res.data.list, loading: false, total: res.data.total })
+        this.props.setLoading(true)
+        try {
+            let res = await getUsersList(option)
+            if (res.code === 200) {
+                this.setState({ list: res.data.list, loading: false, total: res.data.total })
+            }
+        } catch (err) {
+            console.log(err)
+        }
+        this.props.setLoading(false)
     }
 
     deleteSel = async (id) => {
@@ -90,7 +99,7 @@ class Users extends React.Component {
                 <div style={{ background: 'white', padding: '15px', paddingTop: '0' }}>
                     <Search getSearch={this.getSearch} />
                     <div className="table-wrap">
-                        <Table bordered loading={this.state.loading} pagination={false} columns={this.state.columns} rowKey={'id'} dataSource={this.state.list} />
+                        <Table bordered loading={this.props.loading} pagination={false} columns={this.state.columns} rowKey={'id'} dataSource={this.state.list} />
                     </div>
                     <Pagination onChange={this.handlePage.bind(this)} total={this.state.total} itemRender={itemRender.bind(this)} />
                 </div>

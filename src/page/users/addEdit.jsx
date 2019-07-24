@@ -1,6 +1,6 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-import { addUser } from '../../api/users'
+import { addUser, getIdUserInfo, updateUser } from '../../api/users'
 import { Form, Input, Button, message, Select } from 'antd';
 import moment from 'moment';
 import { validateForm, formItemLayout, tailFormItemLayout} from '../../util/util.js'
@@ -18,13 +18,29 @@ class AddEdit extends React.Component {
         },
     };
 
-    componentWillMount () {}
+    componentWillMount () {
+        console.log(this.props)
+        if (this.props.match.params.id) {
+            this.getData(this.props.match.params.id)
+        }
+    }
 
-    addData = async (values) => {
+    getData = async id => {
+        let res = await getIdUserInfo(id)
+        let { username, nickName, password, mobile, email, status, note} = res.data
+        this.props.form.setFieldsValue({ username, nickName, password, mobile, email, status, note })
+    }
+
+    updateData = async (id, data) => {
+        await updateUser(id, data)
+        message.success('保存成功')
+        this.props.form.resetFields();
+    }
+
+    addData = async values => {
         this.setState({ loading: true })
         try {
-            let res = await addUser(values)
-            console.log(res)
+            await addUser(values)
             message.success('保存成功')
             this.setState({ loading: false })
             this.props.form.resetFields();
@@ -38,7 +54,12 @@ class AddEdit extends React.Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                this.addData(values)
+                if (this.props.match.params.id) {
+                    this.updateData(this.props.match.params.id, values)
+                } else {
+                    this.addData(values)
+                }
+                
             }
         });
     }
@@ -79,17 +100,8 @@ class AddEdit extends React.Component {
                         {getFieldDecorator('email', { rules: validateForm.email })(<Input placeholder="请输入邮箱账号"/>)}
                     </Form.Item>
 
-                    <Form.Item label="用户角色">
-                        {getFieldDecorator('email', { rules: validateForm.email })(
-                            <Select placeholder="请选择用户角色">
-                                <Option value="jack">Jack</Option>
-                                <Option value="lucy">Lucy</Option>
-                            </Select>
-                        )}
-                    </Form.Item>
-
                     <Form.Item label="状态">
-                        {getFieldDecorator('status', { rules: validateForm.email })(
+                        {getFieldDecorator('status', { rules: validateForm.status })(
                             <Select placeholder="请选择状态">
                                 <Option value={1}>显示</Option>
                                 <Option value={0}>隐藏</Option>

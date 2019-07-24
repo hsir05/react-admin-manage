@@ -153,8 +153,7 @@ export function getSessionToken () {
  * 移除sessionStorage信息
  *  */
 export function removeSession () {
-    sessionStorage.removeItem('user')
-    sessionStorage.removeItem('token')
+    sessionStorage.clear()
 }
 /*
 *表单验证
@@ -164,6 +163,8 @@ export const validateForm = {
     password: [{ required: true, message: '请输入你的密码' }],
     captcha: [{ required: true, message: '请输入验证码' }],
     imageCode: [{ required: true, message: '请输入图片验证码' }],
+    status: [{ required: true, message: '请选择状态' }],
+    roleIds: [{ type: 'array', required: true, message: '请选择角色' }],
 
     name: [{ required: true, message: '请输入名称', }],
     en_name: [{ required: true, message: '请输入单位英文名称', }],

@@ -15,6 +15,14 @@ function pageTitle (state = defaultState.pageTitle, action) {
       return state
   }
 }
+function loading (state = defaultState.loading, action) {
+    switch (action.type) {
+        case 'SET_LOADING':
+            return action.data
+        default:
+            return state
+    }
+}
 // 菜单
 function menu (state = defaultState.menu, action) {
     return state 
@@ -42,5 +50,6 @@ export default combineReducers({
     pageTitle,
     userInfo,
     menu,
-    token
+    token,
+    loading
 })

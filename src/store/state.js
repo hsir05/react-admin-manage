@@ -8,6 +8,7 @@ import { getSessionUserInfo, getSessionToken} from '../util/util.js'
 
 export default {
     pageTitle: '首页',
+    loading: false,
     userInfo: getSessionUserInfo(),
     token: getSessionToken(),
     menu: [
@@ -15,22 +16,23 @@ export default {
         { key: '2', icon: 'bank', url: '/unitAddEdit', menu: '编辑单位', hidden: true, children: [] },
         { key: '3', icon: 'user', menu: '权限管理',
             children: [
-                { key: '4', url: '/usersManager', icon: 'appstore', menu: '用户管理', children: [] },
-                { key: '441', url: '/userAddEdit', hidden: true, icon: 'appstore', menu: '编辑用户', children: [] },
-                { key: '442', url: '/userAddEdit/:id', hidden: true, icon: 'appstore', menu: '编辑用户', children: [] },
+                { key: '31', url: '/usersManager', icon: 'appstore', menu: '用户管理', children: [] },
+                { key: '32', url: '/userAddEdit', hidden: true, icon: 'appstore', menu: '编辑用户', children: [] },
+                { key: '33', url: '/userAddEdit/:id', hidden: true, icon: 'appstore', menu: '编辑用户', children: [] },
+                { key: '333', url: '/userAuth/:id', hidden: true, icon: 'appstore', menu: '用户授权', children: [] },
 
-                { key: '5', url: '/roles', icon: 'appstore', menu: '角色管理', children: [] },
-                { key: '51', url: '/roleAddEdit', hidden: true, icon: 'appstore', menu: '编辑角色', children: [] }, 
-                { key: '52', url: '/roleAddEdit/:id', hidden: true, icon: 'appstore', menu: '编辑角色', children: [] }, 
+                { key: '34', url: '/roles', icon: 'appstore', menu: '角色管理', children: [] },
+                { key: '35', url: '/roleAddEdit', hidden: true, icon: 'appstore', menu: '编辑角色', children: [] }, 
+                { key: '36', url: '/roleAddEdit/:id', hidden: true, icon: 'appstore', menu: '编辑角色', children: [] }, 
 
-                { key: '6', url: '/menusManager', icon: 'appstore', menu: '菜单管理', children: [] },
-                { key: '61', url: '/menuAddEdit', hidden: true, icon: 'appstore', menu: '编辑菜单', children: [] },
-                { key: '62', url: '/menuAddEdit/:id', hidden: true, icon: 'appstore', menu: '编辑菜单', children: [] },
+                { key: '37', url: '/menusManager', icon: 'appstore', menu: '菜单管理', children: [] },
+                { key: '38', url: '/menuAddEdit', hidden: true, icon: 'appstore', menu: '编辑菜单', children: [] },
+                { key: '39', url: '/menuAddEdit/:id', hidden: true, icon: 'appstore', menu: '编辑菜单', children: [] },
             ]
         },
-        { key: '7', icon: 'setting', menu: '系统管理',
+        { key: '4', icon: 'setting', menu: '系统管理',
             children: [
-                { key: '71', url: '/setting', icon: 'appstore', menu: '主题设置', children: [] }
+                { key: '41', url: '/setting', icon: 'appstore', menu: '主题设置', children: [] }
             ]
         },
         

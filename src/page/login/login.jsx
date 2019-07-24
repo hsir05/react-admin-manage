@@ -1,5 +1,4 @@
 import React from 'react'
-import API from '../../api/api'
 import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button, message, Divider, Row,Col, } from 'antd';
 import { validateForm} from '../../util/util.js'
@@ -32,7 +31,7 @@ class WrappedLoginApp extends React.Component {
   login = async (values) => {
       this.setState({ isSubmit: true})
         let res = await loginAccount(values)
-        console.log(res)
+        // console.log(res)
       if (res.data.code === 200) {
           message.success('登陆成功')
           let token = `${res.data.data.token_type} ${res.data.data.access_token}`
@@ -43,21 +42,26 @@ class WrappedLoginApp extends React.Component {
           let user = await getCurrentUserInfo()
           console.log(user)
           this.setState({ isSubmit: false })
-              sessionStorage.setItem('user', JSON.stringify(res.data))
-              this.props.setUserInfo(res.data)
-               this.props.history.push('/home')
+        sessionStorage.setItem('user', JSON.stringify(res.data))
+        this.props.setUserInfo(res.data)
+        this.props.history.push('/home')
       }
-  }
-    getCapthca = async (values) => {
-        let res = await API.captcha(values)
-      this.setState({captcha: res})
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.login(values)
+          message.success('登陆成功')
+          let token = `asdfadfjsdlkfjlkasdjf312312312312312312`
+          sessionStorage.setItem('token', token)
+          let user = {username: 'asdfad'}  
+          this.props.seToken(token)
+          this.setState({ isSubmit: false })
+          sessionStorage.setItem('user', JSON.stringify(user))
+          this.props.setUserInfo(user)
+          this.props.history.push('/home')
+        // this.login(values)
       }
     });
   }

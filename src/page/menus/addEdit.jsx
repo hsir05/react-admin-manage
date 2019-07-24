@@ -1,7 +1,6 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-import API from '../../api/api'
-import { Form, Input, Button, message, Select } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 import { validateForm, formItemLayout, tailFormItemLayout, typeList} from '../../util/util.js'
 const { TextArea } = Input;
 const { Option } = Select
@@ -25,22 +24,11 @@ class AddEdit extends React.Component {
         }
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                this.addData(values)
+               console.log(values);
+               
             }
         });
     };
-    addData = async (values) => {
-        this.setState({ loading: true })
-        try {
-            let result = await API.addUnit(values)
-            result.code === 200 && message.success('保存成功')
-            this.setState({ loading: false, imageUrl: ''})
-            this.props.form.resetFields();
-        } catch (err) {
-            this.setState({ loading: false })
-            console.warn(err)
-        }
-    }
 
     render () {
         const { getFieldDecorator } = this.props.form;

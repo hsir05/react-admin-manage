@@ -1,14 +1,16 @@
 import Home from '../page/home/home.jsx'
 import Setting from '../page/setting/setting.jsx'
-import Users from '../page/users/users.jsx'
-import Roles from '../page/roles/roles.jsx'
-import Menus from '../page/menus/menus.jsx'
 
+import Users from '../page/users/index.js'
 import UserAddEdit from '../page/users/addEdit.jsx'
+import UserAuth from '../page/users/auth.jsx'
+
+import Roles from '../page/roles/roles.jsx'
 import RoleAddEdit from '../page/roles/addEdit.jsx'
+
+import Menus from '../page/menus/menus.jsx'
 import MenuAddEdit from '../page/menus/addEdit.jsx'
 
-// 定义路由不允许有相同的出现 如 /home/home
 const routes = [
     {
         name: '首页',
@@ -29,10 +31,16 @@ const routes = [
         component: Users
     },
     {
-        name: '编辑用户',
+        name: '添加用户',
         auth: true,
         path: '/userAddEdit',
         component: UserAddEdit
+    },
+    {
+        name: '用户授权',
+        auth: true,
+        path: '/userAuth/:id',
+        component: UserAuth
     },
     {
         name: '编辑用户',
