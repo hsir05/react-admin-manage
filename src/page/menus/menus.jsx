@@ -47,10 +47,11 @@ class Menus extends React.Component {
         this.setState({ loading: true })
         try {
             let res = await getMenusList(option)
-            this.setState({ list: res.data, loading: false, total: res.data.total })
+            this.setState({ list: res.data, total: res.data.total })
         } catch (err) {
             console.log(err)
         }
+        this.setState({ loading: false })
     }
     handlePage (page) {
         let option = {
