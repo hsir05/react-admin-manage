@@ -51,6 +51,8 @@ class WrappedLoginApp extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+          this.props.history.push('/home')
+
       if (!err) {
           message.success('登陆成功')
           let token = `asdfadfjsdlkfjlkasdjf312312312312312312`
