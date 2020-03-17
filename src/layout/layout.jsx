@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Layout, Avatar, Icon } from 'antd'
 import { Link, Redirect} from 'react-router-dom'
 import SlideBar from './slidBar.jsx'
-import { menuIsRoutes, removeSession } from '../util/util.js'
+import { menuIsRoutes, removeSession } from '../utils/utils.js'
 import './layout.scss'
 
 const { Header, Content } = Layout

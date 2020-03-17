@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { menuIsRoutes } from '../util/util.js'
+import { menuIsRoutes } from '../utils/utils.js'
 
 const mapStateToProps = state => (state)
 const mapDispatchToProps = dispatch => ({ ...dispatch })

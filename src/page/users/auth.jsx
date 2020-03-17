@@ -3,7 +3,7 @@ import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import { getIdUserRole, authUserRole } from '../../api/users'
 import { getRolesList } from '../../api/roles'
 import { Form, Input, Button, message, Select } from 'antd';
-import { validateForm, formItemLayout, tailFormItemLayout } from '../../util/util.js'
+import { validateForm, formItemLayout, tailFormItemLayout } from '../../utils/utils.js'
 const { Option } = Select;
 
 class Auth extends React.Component {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { baseURL } from '../envconfig/envconfig';
-import { removeSession } from '../util/util.js'
+import { removeSession } from '../utils/utils.js'
 import { message } from "antd";
 
 function interceptors (url) {

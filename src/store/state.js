@@ -1,5 +1,5 @@
 // state.js
-import { getSessionUserInfo, getSessionToken} from '../util/util.js'
+import { getSessionUserInfo, getSessionToken } from '../utils/utils.js'
 
 // 声明默认值
 // 这里我们列举两个示例

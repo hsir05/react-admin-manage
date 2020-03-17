@@ -1,4 +1,4 @@
-import { postRequestBody, get } from '../util/request'
+import { postRequestBody, get } from '../utils/request'
 
 // 获取菜单列表
 export const getMenusList = async (data = {}) => {

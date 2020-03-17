@@ -4,7 +4,7 @@ import { Table, Button, Popconfirm, Pagination, message } from 'antd'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import Search from '../../components/search/search.jsx'
 import { getUsersList, delUser} from '../../api/users'
-import { itemRender } from '../../util/util.js'
+import { itemRender } from '../../utils/utils.js'
 import './users.scss'
 
 class Users extends React.Component {

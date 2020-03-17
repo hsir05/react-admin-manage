@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button, message, Divider, Row,Col, } from 'antd';
-import { validateForm} from '../../util/util.js'
+import { validateForm } from '../../utils/utils.js'
 import { captcha, loginAccount, getCurrentUserInfo } from '../../api/login'
 import './login.scss'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import { Form, Input, Button, TreeSelect} from 'antd';
-import { validateForm, formItemLayout, tailFormItemLayout} from '../../util/util.js'
+import { validateForm, formItemLayout, tailFormItemLayout } from '../../utils/utils.js'
 const { TreeNode } = TreeSelect;
 const { TextArea } = Input;
 

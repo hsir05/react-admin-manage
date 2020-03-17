@@ -1,4 +1,4 @@
-import { postRequestBody, get } from '../util/request'
+import { postRequestBody, get } from '../utils/request'
 
 // 获取用户列表
 export const getUsersList = async (data = {}) => {

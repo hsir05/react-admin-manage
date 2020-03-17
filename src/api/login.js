@@ -1,4 +1,4 @@
-import { postRequestParam, get } from '../util/request'
+import { postRequestParam, get } from '../utils/request'
 
 // 获取图片验证码
 export const  captcha = async (params = {}) =>{
