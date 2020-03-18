@@ -1,9 +1,9 @@
 import React from 'react'
 import { Table, Button, Popconfirm, Pagination } from 'antd'
 import { Link } from 'react-router-dom'
-import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-import Search from '../../components/search/search.jsx'
-import { getRolesList } from '../../api/roles'
+import BreadCrumb from '@/components/breadCrumb/breadCrumb.jsx'
+import Search from '@/components/search/search.jsx'
+import { getRolesList } from '@/api/roles'
 import './roles.scss'
 
 class Roles extends React.Component {

@@ -1,8 +1,8 @@
 import React from 'react'
-import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
+import BreadCrumb from '@/components/breadCrumb/breadCrumb.jsx'
 import './setting.scss'
 import {message} from 'antd';
-import BlockColor from '../../components/blockColor/blockColor.jsx'
+import BlockColor from '@/components/blockColor/blockColor.jsx'
 import less from 'less';
 
 class About extends React.Component {

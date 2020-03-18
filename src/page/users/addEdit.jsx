@@ -1,9 +1,9 @@
 import React from 'react'
-import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-import { addUser, getIdUserInfo, updateUser } from '../../api/users'
+import BreadCrumb from '@/components/breadCrumb/breadCrumb.jsx'
+import { addUser, getIdUserInfo, updateUser } from '@/api/users'
 import { Form, Input, Button, message, Select } from 'antd';
 import moment from 'moment';
-import { validateForm, formItemLayout, tailFormItemLayout } from '../../utils/utils.js'
+import { validateForm, formItemLayout, tailFormItemLayout } from '@/utils/utils.js'
 const { Option } = Select;
 const { TextArea } = Input;
 
