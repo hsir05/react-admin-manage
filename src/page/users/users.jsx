@@ -7,7 +7,7 @@ import { getUsersList, delUser} from '../../api/users'
 import { itemRender } from '../../utils/utils.js'
 import './users.scss'
 
-class Users extends React.Component {
+export default class Users extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -108,4 +108,3 @@ class Users extends React.Component {
     }
 }
 
-export default Users;

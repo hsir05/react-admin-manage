@@ -5,7 +5,7 @@ import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
 import Search from '../../components/search/search.jsx'
 import { getMenusList } from '../../api/menus'
 
-class Menus extends React.Component {
+export default class Menus extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -89,4 +89,3 @@ class Menus extends React.Component {
         )
     }
 }
-export default Menus;
