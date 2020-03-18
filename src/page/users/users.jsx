@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Table, Button, Popconfirm, Pagination, message } from 'antd'
-import BreadCrumb from '../../components/breadCrumb/breadCrumb.jsx'
-import Search from '../../components/search/search.jsx'
-import { getUsersList, delUser} from '../../api/users'
+import BreadCrumb from '@/components/breadCrumb/breadCrumb.jsx'
+import Search from '@/components/search/search.jsx'
+import { getUsersList, delUser } from '@/api/users'
 import { itemRender } from '@/utils/utils.js'
 import './users.scss'
 
