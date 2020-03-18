@@ -4,7 +4,7 @@ const { generateTheme } = require('antd-theme-generator');
 const options = {
     stylesDir: path.join(__dirname, './src/style'),
     antDir: path.join(__dirname, './node_modules/antd'),
-    varFile: path.join(__dirname, './src/styles/vars.less'),
+    varFile: path.join(__dirname, './src/style/vars.less'),
     themeVariables: [
         '@primary-color',
         '@secondary-color',

@@ -16,8 +16,7 @@ const changeTheme = (val) => { // 改变主题样式
     .then(() => {
         localStorage.setItem('theme', val)
     })
-    .catch(error => {
-    });
+    .catch(() => {});
 }
 const theme = localStorage.getItem('theme')
 theme && changeTheme(theme)
