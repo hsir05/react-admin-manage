@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setLoading } from '../../store/actions.js'
+import { setLoading } from '@/store/actions.js'
 import Users from './users.jsx'
 
 const mapStateToProps = (state) => {
